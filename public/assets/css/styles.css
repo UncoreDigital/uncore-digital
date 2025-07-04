@@ -4316,7 +4316,8 @@ textarea:focus {
 @media (min-width: 1200px) {
   .tz-main-menu > ul li.has-dropdown .submenu {
     padding: 0.9375rem 0.9375rem 0.9375rem 0.9375rem;
-    width: 200px;
+    min-width: 200px;
+    width: auto;
   }
 }
 .tz-main-menu > ul li.has-dropdown .submenu li a {
