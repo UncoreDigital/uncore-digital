@@ -1,0 +1,27 @@
+  ---
+  import ServiceImage from "./ServiceImage.astro";
+  import IntroPara from "./IntroPara.astro";
+  import ServiceOverview from "./ServiceOverview.astro";
+  import ImageGrid from "./ImageGrid.astro";
+  import KeyFeatures from "./KeyFeatures.astro";
+  import FAQ from "./inner/FAQ.astro";
+  import SideBar from "./SideBar.astro";
+  ---
+  <div class="tz-service-details">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-xl-9">
+          <ServiceImage />
+          <IntroPara />
+          <ServiceOverview />
+          <ImageGrid />
+          <KeyFeatures />
+          <FAQ />
+        </div>
+        <div class="col-xl-3">
+          <SideBar />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Service Details End -->
