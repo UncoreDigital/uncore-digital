@@ -1,0 +1,105 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BreadCrum from "../components/service-details/BreadCrum.astro";
+
+import ServiceImage from "../components/service-details/ServiceImage.astro";
+import IntroPara from "../components/service-details/IntroPara.astro";
+import ServiceOverview from "../components/service-details/ServiceOverview.astro";
+import ImageGrid from "../components/service-details/ImageGrid.astro";
+import KeyFeatures from "../components/service-details/KeyFeatures.astro";
+import FAQ from "../components/service-details/inner/FAQ.astro";
+import SideBar from "../components/service-details/SideBar.astro";
+
+const introParagraphs = [
+  "Digital transformation is more than just technology—it's a mindset shift. We help businesses adapt and thrive in a digital-first world by reimagining processes, customer experiences, and operational models.",
+  "Whether you're modernizing legacy systems or building a new digital infrastructure, our team crafts custom strategies aligned with your business goals.",
+  "We focus on empowering your business with agile methodologies, cloud solutions, and automation to boost productivity and long-term scalability."
+];
+
+
+const overviewParagraphs = [
+  "Our digital transformation services begin with a comprehensive audit of your existing workflows, systems, and customer journey. We identify gaps and opportunities to build a robust digital roadmap.",
+  "From system integration and cloud migration to AI implementation and customer experience enhancement, we create digital ecosystems that are future-ready."
+];
+
+
+
+const overviewCounters = [
+  { value: "12", suffix: "+", description: "Years of Digital Experience" },
+  { value: "200", suffix: "+", description: "Successful Digital Projects" },
+  { value: "35", suffix: "+", description: "Enterprises Transformed Globally" }
+];
+
+
+const featureParagraphs = [
+  "Our solutions are human-centered and tech-enabled, ensuring adoption and impact across your organization.",
+  "We help clients unlock new value streams by automating operations, enabling real-time insights, and fostering innovation.",
+  "From mobile-first platforms to AI-powered analytics, we combine design thinking with technical excellence."
+];
+
+
+const featureList = [
+  "Cloud Adoption & Infrastructure Modernization",
+  "Process Automation & Workflow Optimization",
+  "Enterprise Mobility Solutions",
+  "Data Analytics & BI Integration",
+  "Customer Experience Platforms",
+  "Digital Strategy & Roadmap Consulting"
+];
+
+
+const faqs = [
+  {
+    question: "What is digital transformation in business?",
+    answer: "Digital transformation is the integration of digital technology into all areas of a business, fundamentally changing how it operates and delivers value to customers."
+  },
+  {
+    question: "How long does a typical digital transformation project take?",
+    answer: "Depending on the scale, it can take from a few months to over a year. We tailor timelines based on your needs and ensure consistent progress through agile methodologies."
+  },
+  {
+    question: "Do you provide training or support post-implementation?",
+    answer: "Yes, we offer training, documentation, and ongoing support to ensure smooth adoption and maximum ROI from the transformation."
+  },
+  {
+    question: "Can you work with our existing IT team?",
+    answer: "Absolutely. We collaborate with in-house teams to integrate our solutions smoothly and upskill your staff as needed."
+  }
+];
+
+
+---
+
+<Layout>
+  <BreadCrum title="Digital Transformation" />
+
+  <div class="tz-service-details">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-xl-9">
+          <ServiceImage />
+          <IntroPara 
+  title="Our Expertise in Digital Transformation"
+  paragraphs={introParagraphs}
+/>
+          <ServiceOverview 
+  title="Service Overview"
+  paragraphs={overviewParagraphs}
+  imageUrl = "assets/images/service/service-details-img2.jpg",
+  counters={overviewCounters}
+/>
+          <ImageGrid />
+          <KeyFeatures 
+  title="Key Features"
+  paragraphs={featureParagraphs}
+  keyFeatures={featureList}
+/>
+          <FAQ faqs={faqs} imageUrl="assets/images/service/service-details-img5.jpg" />
+        </div>
+        <div class="col-xl-3">
+          <SideBar />
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

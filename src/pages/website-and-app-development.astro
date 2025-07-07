@@ -1,0 +1,109 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BreadCrum from "../components/service-details/BreadCrum.astro";
+
+import ServiceImage from "../components/service-details/ServiceImage.astro";
+import IntroPara from "../components/service-details/IntroPara.astro";
+import ServiceOverview from "../components/service-details/ServiceOverview.astro";
+import ImageGrid from "../components/service-details/ImageGrid.astro";
+import KeyFeatures from "../components/service-details/KeyFeatures.astro";
+import FAQ from "../components/service-details/inner/FAQ.astro";
+import SideBar from "../components/service-details/SideBar.astro";
+
+const introParagraphs = [
+  "A powerful online presence starts with a well-crafted website or mobile app. We design and develop digital platforms that are visually appealing, user-friendly, and technically robust.",
+  "From e-commerce stores to business websites and native apps, we build custom solutions that reflect your brand and meet your goals.",
+  "Whether you're launching a new product or revamping an existing platform, our development process ensures speed, scalability, and security."
+];
+
+
+
+const overviewParagraphs = [
+  "Our development process starts with a deep understanding of your brand, audience, and objectives. We then translate this insight into intuitive digital experiences.",
+  "We offer end-to-end solutions—from wireframing and UI/UX design to front-end and back-end development—ensuring your website or app works flawlessly across devices."
+];
+
+
+
+
+const overviewCounters = [
+  { value: "150", suffix: "+", description: "Websites & Apps Developed" },
+  { value: "98", suffix: "%", description: "Client Satisfaction Rate" },
+  { value: "25", suffix: "+", description: "Industries Served Worldwide" }
+];
+
+
+
+const featureParagraphs = [
+  "We focus on performance, accessibility, and SEO while maintaining stunning design aesthetics.",
+  "Our cross-functional team ensures seamless development, from database architecture to responsive design.",
+  "With post-launch support and scalable codebases, your digital presence is set for long-term growth."
+];
+
+
+
+const featureList = [
+  "Custom Website Development",
+  "Mobile App (iOS & Android) Development",
+  "CMS Integration (WordPress, Webflow, etc.)",
+  "eCommerce Development (Shopify, WooCommerce)",
+  "API Integration & Backend Systems",
+  "UI/UX Design and Prototyping"
+];
+
+
+const faqs = [
+  {
+    question: "Do you build both websites and mobile apps?",
+    answer: "Yes, we specialize in both. We create responsive websites and native or hybrid mobile apps tailored to your business needs."
+  },
+  {
+    question: "Can you redesign my existing website or app?",
+    answer: "Absolutely. We offer redesign services to improve aesthetics, performance, user experience, and overall functionality."
+  },
+  {
+    question: "How long does it take to develop a website or app?",
+    answer: "Timelines vary by project scope. Basic websites take 2–4 weeks, while complex apps may take 8–12 weeks. We’ll provide a timeline after understanding your requirements."
+  },
+  {
+    question: "Will my website/app be mobile-friendly?",
+    answer: "Yes, all our projects are built with responsive design principles, ensuring they look and perform great on all devices."
+  }
+];
+
+
+---
+
+<Layout>
+  <BreadCrum title="Website & App Development" />
+
+  <div class="tz-service-details">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-xl-9">
+          <ServiceImage />
+          <IntroPara 
+  title="Our Expertise in Website & App Development"
+  paragraphs={introParagraphs}
+/>
+          <ServiceOverview 
+  title="Service Overview"
+  paragraphs={overviewParagraphs}
+  imageUrl = "assets/images/service/service-details-img2.jpg",
+  counters={overviewCounters}
+/>
+          <ImageGrid />
+          <KeyFeatures 
+  title="Key Features"
+  paragraphs={featureParagraphs}
+  keyFeatures={featureList}
+/>
+          <FAQ faqs={faqs} imageUrl="assets/images/service/service-details-img5.jpg" />
+        </div>
+        <div class="col-xl-3">
+          <SideBar />
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
