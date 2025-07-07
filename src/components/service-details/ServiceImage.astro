@@ -1,3 +1,6 @@
+---
+const { imageUrl = 'assets/images/service/service-details-img1.jpg' } = Astro.props;
+---
 <div class="tz-service-details__image">
-            <img src="assets/images/service/service-details-img1.jpg" alt="img">
-          </div>
+  <img src={imageUrl} alt="img" />
+</div>

@@ -1,0 +1,43 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BreadCrum from "../components/service-details/BreadCrum.astro";
+
+import ServiceImage from "../components/service-details/ServiceImage.astro";
+import IntroPara from "../components/service-details/IntroPara.astro";
+import ServiceOverview from "../components/service-details/ServiceOverview.astro";
+import ImageGrid from "../components/service-details/ImageGrid.astro";
+import KeyFeatures from "../components/service-details/KeyFeatures.astro";
+import FAQ from "../components/service-details/inner/FAQ.astro";
+import SideBar from "../components/service-details/SideBar.astro";
+
+const introParagraphs = [
+  "We specialize in delivering cutting-edge digital solutions tailored to your business needs. Our team of experts is dedicated to helping you achieve your goals through innovative strategies, creative design, and advanced technology.",
+  "Your website is the cornerstone of your online presence. We create visually stunning, user-friendly, and responsive websites that not only look great but also perform seamlessly across all devices.",
+  "Our branding services include logo design, color palette creation, typography selection, and brand guideline development. We also offer graphic design services for marketing materials such as business cards.",
+];
+---
+
+<Layout>
+  <BreadCrum title="Digital and Brand Marketing" />
+
+  <div class="tz-service-details">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-xl-9">
+          <ServiceImage />
+          <IntroPara 
+  title="Our Expertise in Digital and Brand Marketing"
+  paragraphs={introParagraphs}
+/>
+          <ServiceOverview />
+          <ImageGrid />
+          <KeyFeatures />
+          <FAQ />
+        </div>
+        <div class="col-xl-3">
+          <SideBar />
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

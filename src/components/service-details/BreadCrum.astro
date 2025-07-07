@@ -1,33 +1,35 @@
-  <!-- Breadcrumb Start -->
-  <section class="tz-breadcrumb" style="
-        background-image: url('assets/images/breadcrumb/breadcrumb-img.jpg');
-      ">
-    <div class="tz-breadcrumb__overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="tz-breadcrumb__content">
-            <h5 class="tz-breadcrumb__title tz-display-4 tz-text-neutral5 text-uppercase">
-              Service Details
-            </h5>
-            <div class="tz-breadcrumb__menu tz-text-l text-uppercase">
-              <nav aria-label="tz-breadcrumb__nav">
-                <ul class="tz-breadcrumb__list">
-                  <li class="tz-breadcrumb__item">
-                    <a href='/'>Home</a>
-                  </li>
-                  <li class="tz-breadcrumb__item active">
-                    <i class="ph ph-caret-double-right"></i>
-                  </li>
-                  <li class="tz-breadcrumb__item active" aria-current="page">
-                    Service Details
-                  </li>
-                </ul>
-              </nav>
-            </div>
+---
+// Accept props
+const { imageUrl = 'assets/images/breadcrumb/breadcrumb-img.jpg', title = 'Service Details' } = Astro.props;
+---
+<!-- Breadcrumb Start -->
+<section class="tz-breadcrumb" style={`background-image: url('${imageUrl}');`}>
+  <div class="tz-breadcrumb__overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="tz-breadcrumb__content">
+          <h5 class="tz-breadcrumb__title tz-display-4 tz-text-neutral5 text-uppercase text-nowrap">
+            {title}
+          </h5>
+          <div class="tz-breadcrumb__menu tz-text-l text-uppercase">
+            <nav aria-label="tz-breadcrumb__nav">
+              <ul class="tz-breadcrumb__list">
+                <li class="tz-breadcrumb__item">
+                  <a href="/">Home</a>
+                </li>
+                <li class="tz-breadcrumb__item active">
+                  <i class="ph ph-caret-double-right"></i>
+                </li>
+                <li class="tz-breadcrumb__item active" aria-current="page">
+                  {title}
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <!-- Breadcrumb End -->
+  </div>
+</section>
+<!-- Breadcrumb End -->

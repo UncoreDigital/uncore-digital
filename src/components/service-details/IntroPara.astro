@@ -1,20 +1,17 @@
+---
+interface Props {
+  title?: string;
+  paragraphs?: string[];
+}
+
+const { title = "Web Design & UI/UX Development", paragraphs = [] }: Props = Astro.props;
+---
 <h5 class="tz-service-details__title tz-display-4 tz-text-neutral5 text-uppercase tz-pt-30 tz-pt-lg-60">
-            Web Design & UI/UX Development
-          </h5>
-          <p class="tz-service-details__desc tz-text-neutral6 tz-text-l fw-light">
-            we specialize in delivering cutting-edge digital solutions
-            tailored to your business needs. Our team of experts is dedicated
-            to helping you achieve your goals through innovative strategies,
-            creative design, and advanced technology. Here’s a breakdown of
-            the services we offer: Your website is the cornerstone of your
-            online presence. We create visually stunning, user-friendly, and
-            responsive websites that not only look great but also perform
-            seamlessly across all devices.
-          </p>
-          <p class="tz-service-details__desc tz-text-neutral6 tz-text-l fw-light">
-            A strong brand identity sets you apart from the competition. Our
-            branding services include logo design, color palette creation,
-            typography selection, and brand guideline development. We also
-            offer graphic design services for marketing materials such as
-            business cards,
-          </p>
+  {title}
+</h5>
+
+{paragraphs.map((para) => (
+  <p class="tz-service-details__desc tz-text-neutral6 tz-text-l fw-light">
+    {para}
+  </p>
+))}
