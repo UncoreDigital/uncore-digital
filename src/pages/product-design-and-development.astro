@@ -1,0 +1,99 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BreadCrum from "../components/service-details/BreadCrum.astro";
+
+import ServiceImage from "../components/service-details/ServiceImage.astro";
+import IntroPara from "../components/service-details/IntroPara.astro";
+import ServiceOverview from "../components/service-details/ServiceOverview.astro";
+import ImageGrid from "../components/service-details/ImageGrid.astro";
+import KeyFeatures from "../components/service-details/KeyFeatures.astro";
+import FAQ from "../components/service-details/inner/FAQ.astro";
+import SideBar from "../components/service-details/SideBar.astro";
+
+const introParagraphs = [
+  "Great products begin with great design. Our product design and development services blend creativity with technical expertise to bring your ideas to life.",
+  "From early-stage research and ideation to prototyping and final development, we ensure each product delivers exceptional user experiences.",
+  "Whether it’s a web app, mobile application, or custom software, we design with the user in mind and develop for performance, scalability, and innovation."
+];
+
+const overviewParagraphs = [
+  "We begin by understanding your business goals and user needs, conducting in-depth research to uncover opportunities and challenges.",
+  "Our team then crafts intuitive UI/UX designs and follows through with agile, scalable development, ensuring the final product is both beautiful and functional."
+];
+
+
+const overviewCounters = [
+  { value: "12", suffix: "+", description: "Years in Product Design" },
+  { value: "200", suffix: "+", description: "Digital Products Launched" },
+  { value: "40", suffix: "+", description: "Technologies Used & Integrated" }
+];
+
+const featureParagraphs = [
+  "Our process starts with user research, ensuring the product solves real problems effectively.",
+  "We focus on creating intuitive interfaces and experiences that delight users across platforms.",
+  "Using modern frameworks and agile methodologies, we deliver reliable and scalable digital products."
+];
+
+const featureList = [
+  "UX Research & Wireframing",
+  "UI/UX Design for Web & Mobile",
+  "Full-Stack Product Development",
+  "MVP Launch & Rapid Iteration",
+  "Cross-Platform Compatibility",
+  "Post-Launch Support & Scaling"
+];
+
+const faqs = [
+  {
+    question: "What types of products do you design and develop?",
+    answer: "We work on a wide range of digital products including mobile apps, web platforms, SaaS tools, eCommerce systems, and internal enterprise applications."
+  },
+  {
+    question: "Can you help with MVP development?",
+    answer: "Absolutely. We specialize in rapid MVP design and development, helping you validate your product idea quickly and cost-effectively."
+  },
+  {
+    question: "How do you ensure a user-centered design approach?",
+    answer: "We conduct thorough user research, usability testing, and iterative design to ensure the final product truly serves its users and drives engagement."
+  },
+  {
+    question: "Do you provide post-launch support and updates?",
+    answer: "Yes, we offer ongoing maintenance, feature updates, and performance optimization to ensure your product continues to evolve and grow."
+  }
+];
+
+---
+
+<Layout>
+  <BreadCrum title="Product Design and Development" />
+
+  <div class="tz-service-details">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-xl-9">
+          <ServiceImage />
+          <IntroPara 
+  title="Our Expertise in Product Design & Development"
+  paragraphs={introParagraphs}
+/>
+          <ServiceOverview 
+  title="Service Overview"
+  paragraphs={overviewParagraphs}
+  imageUrl = "assets/images/service/service-details-img2.jpg",
+  counters={overviewCounters}
+/>
+          <ImageGrid />
+          <KeyFeatures 
+  title="Key Features"
+  paragraphs={featureParagraphs}
+  keyFeatures={featureList}
+/>
+          <FAQ faqs={faqs} imageUrl="assets/images/service/service-details-img5.jpg" />
+        </div>
+        <div class="col-xl-3">
+          <SideBar />
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

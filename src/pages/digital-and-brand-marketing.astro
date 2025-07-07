@@ -11,10 +11,56 @@ import FAQ from "../components/service-details/inner/FAQ.astro";
 import SideBar from "../components/service-details/SideBar.astro";
 
 const introParagraphs = [
-  "We specialize in delivering cutting-edge digital solutions tailored to your business needs. Our team of experts is dedicated to helping you achieve your goals through innovative strategies, creative design, and advanced technology.",
-  "Your website is the cornerstone of your online presence. We create visually stunning, user-friendly, and responsive websites that not only look great but also perform seamlessly across all devices.",
-  "Our branding services include logo design, color palette creation, typography selection, and brand guideline development. We also offer graphic design services for marketing materials such as business cards.",
+  "In the age of digital transformation, a strong online presence is essential. Our digital marketing services help your brand stay ahead of the curve by leveraging innovative technologies and trends.",
+  "From compelling content to strategic advertising, we tailor each digital campaign to drive meaningful engagement and real results across all platforms.",
+  "Whether you're building a brand from scratch or refining your identity, our branding services ensure your message is clear, consistent, and impactful."
 ];
+
+const overviewParagraphs = [
+  "Our digital strategy begins with deep market research and audience analysis to develop campaigns that resonate with your target users.",
+  "Through data-driven marketing, content creation, SEO, social media, and branding, we build a comprehensive approach that fuels business growth and brand loyalty."
+];
+
+const overviewCounters = [
+  { value: "10", suffix: "+", description: "Years in Digital Marketing" },
+  { value: "300", suffix: "+", description: "Successful Brand Campaigns" },
+  { value: "50", suffix: "+", description: "Industries Served Globally" }
+];
+
+const featureParagraphs = [
+  "We focus on a strategy-first approach to ensure every campaign meets business goals and speaks directly to your audience.",
+  "Our brand specialists craft distinctive brand voices, visual identities, and compelling messaging across digital channels.",
+  "By integrating marketing automation, analytics, and content strategy, we optimize your brand’s performance across the web."
+];
+
+const featureList = [
+  "Integrated Digital Marketing Strategy",
+  "Brand Identity Creation & Guidelines",
+  "SEO & Paid Ads Campaigns",
+  "Social Media Growth & Management",
+  "Email Marketing & Automation",
+  "Analytics and Performance Reporting"
+];
+
+const faqs = [
+  {
+    question: "What services are included in digital marketing?",
+    answer: "Our digital marketing services include SEO, social media management, PPC advertising, email marketing, and content strategy to help you reach and engage your audience."
+  },
+  {
+    question: "How can branding help my business grow?",
+    answer: "Branding builds trust and recognition. A cohesive brand identity helps differentiate your business, enhances customer loyalty, and improves marketing ROI."
+  },
+  {
+    question: "Do you offer complete rebranding services?",
+    answer: "Yes, we offer full rebranding solutions including logo design, brand messaging, tone of voice, color palette, typography, and visual systems tailored to your goals."
+  },
+  {
+    question: "How long does it take to see results from digital marketing?",
+    answer: "It depends on the strategy. SEO may take 3-6 months, while paid ads and social campaigns can show results in days or weeks. We provide transparent reporting at every stage."
+  }
+];
+
 ---
 
 <Layout>
@@ -29,10 +75,19 @@ const introParagraphs = [
   title="Our Expertise in Digital and Brand Marketing"
   paragraphs={introParagraphs}
 />
-          <ServiceOverview />
+          <ServiceOverview 
+  title="Creative & Digital Services"
+  paragraphs={overviewParagraphs}
+  imageUrl = "assets/images/service/service-details-img2.jpg",
+  counters={overviewCounters}
+/>
           <ImageGrid />
-          <KeyFeatures />
-          <FAQ />
+          <KeyFeatures 
+  title="Key Features"
+  paragraphs={featureParagraphs}
+  keyFeatures={featureList}
+/>
+          <FAQ faqs={faqs} imageUrl="assets/images/service/service-details-img5.jpg" />
         </div>
         <div class="col-xl-3">
           <SideBar />

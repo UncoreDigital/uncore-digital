@@ -1,142 +1,59 @@
+
+---
+type FAQItem = {
+  question: string;
+  answer: string;
+};
+
+interface Props {
+  faqs?: FAQItem[];
+  imageUrl?: string;
+}
+
+const { faqs = [], imageUrl = "assets/images/service/service-details-img5.jpg" } = Astro.props as Props;
+---
+
+
+
+
 <div class="row g-4 d-flex justify-content-between tz-pt-30 tz-pt-lg-60">
   <div class="col-md-5">
     <div class="tz-service-details__image">
-      <img src="assets/images/service/service-details-img5.jpg" alt="img" />
+      <img src={imageUrl} alt="FAQ section image" />
     </div>
   </div>
   <div class="col-md-6">
     <div class="accordion tz-faq2-accordion" id="faqAccordion">
-      <!-- FAQ Item 1 -->
-      <div class="accordion-item border-0 bg-transparent">
-        <h4 class="accordion-header" id="faqHeadingOne">
-          <button
-            class="accordion-button collapsed bg-transparent shadow-none px-0 d-flex justify-content-between align-items-center"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#faqCollapseOne"
-            aria-expanded="false"
-            aria-controls="faqCollapseOne"
+      {faqs.map((faq, index) => (
+        <div class="accordion-item border-0 bg-transparent">
+          <h4 class="accordion-header" id={`faqHeading${index}`}>
+            <button
+              class={`accordion-button bg-transparent shadow-none px-0 d-flex justify-content-between align-items-center ${index !== 2 ? 'collapsed' : ''}`}
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target={`#faqCollapse${index}`}
+              aria-expanded={index === 2 ? "true" : "false"}
+              aria-controls={`faqCollapse${index}`}
+            >
+              {faq.question}
+              <i class="ph ph-plus ms-auto icon-plus"></i>
+              <i class="ph ph-minus ms-auto icon-minus"></i>
+            </button>
+          </h4>
+          <div
+            id={`faqCollapse${index}`}
+            class={`accordion-collapse collapse ${index === 2 ? 'show' : ''}`}
+            aria-labelledby={`faqHeading${index}`}
+            data-bs-parent="#faqAccordion"
           >
-            What services does your agency offer?
-            <i class="ph ph-plus ms-auto icon-plus"></i>
-            <i class="ph ph-minus ms-auto icon-minus"></i>
-          </button>
-        </h4>
-        <div
-          id="faqCollapseOne"
-          class="accordion-collapse collapse"
-          aria-labelledby="faqHeadingOne"
-          data-bs-parent="#faqAccordion"
-        >
-          <div class="accordion-body px-0 pt-2">
-            <p class="tz-text-l mb-0">
-              If you’re looking to improve your online presence, reach more
-              customers, or streamline your digital operations, a digital agency
-              can help. Whether you’re a startup or an established business, we
-              tailor our services to meet your unique needs.
-            </p>
+            <div class="accordion-body px-0 pt-2">
+              <p class="tz-text-l mb-0">
+                {faq.answer}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-
-      <!-- FAQ Item 2 -->
-      <div class="accordion-item border-0 bg-transparent">
-        <h4 class="accordion-header" id="faqHeadingTwo">
-          <button
-            class="accordion-button collapsed bg-transparent shadow-none px-0 d-flex justify-content-between align-items-center"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#faqCollapseTwo"
-            aria-expanded="false"
-            aria-controls="faqCollapseTwo"
-          >
-            What’s your process for working with clients?
-            <i class="ph ph-plus ms-auto icon-plus"></i>
-            <i class="ph ph-minus ms-auto icon-minus"></i>
-          </button>
-        </h4>
-        <div
-          id="faqCollapseTwo"
-          class="accordion-collapse collapse"
-          aria-labelledby="faqHeadingTwo"
-          data-bs-parent="#faqAccordion"
-        >
-          <div class="accordion-body px-0 pt-2">
-            <p class="tz-text-l mb-0">
-              If you’re looking to improve your online presence, reach more
-              customers, or streamline your digital operations, a digital agency
-              can help. Whether you’re a startup or an established business, we
-              tailor our services to meet your unique needs.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- FAQ Item 3 (Default Open) -->
-      <div class="accordion-item border-0 bg-transparent">
-        <h4 class="accordion-header" id="faqHeadingThree">
-          <button
-            class="accordion-button bg-transparent shadow-none px-0 d-flex justify-content-between align-items-center"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#faqCollapseThree"
-            aria-expanded="true"
-            aria-controls="faqCollapseThree"
-          >
-            How do I know if I need a digital agency?
-            <i class="ph ph-plus ms-auto icon-plus"></i>
-            <i class="ph ph-minus ms-auto icon-minus"></i>
-          </button>
-        </h4>
-        <div
-          id="faqCollapseThree"
-          class="accordion-collapse collapse show"
-          aria-labelledby="faqHeadingThree"
-          data-bs-parent="#faqAccordion"
-        >
-          <div class="accordion-body px-0 pt-2">
-            <p class="tz-text-l mb-0">
-              If you’re looking to improve your online presence, reach more
-              customers, or streamline your digital operations, a digital agency
-              can help. Whether you’re a startup or an established business, we
-              tailor our services to meet your unique needs.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- FAQ Item 4 -->
-      <div class="accordion-item border-0 bg-transparent">
-        <h4 class="accordion-header" id="faqHeadingFour">
-          <button
-            class="accordion-button collapsed bg-transparent shadow-none px-0 d-flex justify-content-between align-items-center"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#faqCollapseFour"
-            aria-expanded="false"
-            aria-controls="faqCollapseFour"
-          >
-            How involved do I need to be in the process?
-            <i class="ph ph-plus ms-auto icon-plus"></i>
-            <i class="ph ph-minus ms-auto icon-minus"></i>
-          </button>
-        </h4>
-        <div
-          id="faqCollapseFour"
-          class="accordion-collapse collapse"
-          aria-labelledby="faqHeadingFour"
-          data-bs-parent="#faqAccordion"
-        >
-          <div class="accordion-body px-0 pt-2">
-            <p class="tz-text-l mb-0">
-              If you’re looking to improve your online presence, reach more
-              customers, or streamline your digital operations, a digital agency
-              can help. Whether you’re a startup or an established business, we
-              tailor our services to meet your unique needs.
-            </p>
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   </div>
 </div>
