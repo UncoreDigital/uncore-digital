@@ -1,7 +1,7 @@
 ---
 interface CounterItem {
-  value: string;      // e.g., '17'
-  suffix?: string;    // e.g., '+' or 'K'
+  value: string; // e.g., '17'
+  suffix?: string; // e.g., '+' or 'K'
   description: string;
 }
 
@@ -20,21 +20,23 @@ const {
     { value: "17", suffix: "+", description: "Years of experience this field" },
     { value: "40", suffix: "K", description: "Number of projects completed" },
     { value: "7", suffix: "+", description: "Number of awards achieved" },
-  ]
+  ],
 }: Props = Astro.props;
 ---
 
 <div class="row g-4 d-flex justify-content-between tz-pt-30 tz-pt-lg-60">
   <div class="col-md-8">
-    <h2 class="tz-service-details__subtitle tz-text-neutral5">
+    <h2 class="tz-service-details__subtitle tz-text-neutral5 poppins-bold">
       {title}
     </h2>
 
-    {paragraphs.map((para) => (
-      <p class="tz-service-details__desc tz-text-neutral6 tz-text-l fw-light">
-        {para}
-      </p>
-    ))}
+    {
+      paragraphs.map((para) => (
+        <p class="tz-service-details__desc tz-text-neutral6 tz-text-l fw-light montserrat-regular">
+          {para}
+        </p>
+      ))
+    }
 
     <div class="tz-service-details__image tz-pt-10 tz-pt-lg-32">
       <img src={imageUrl} alt="img" />
@@ -43,16 +45,19 @@ const {
 
   <div class="col-md-3">
     <div class="tz-service-details-counter">
-      {counters.map(({ value, suffix = "", description }) => (
-        <div class="tz-service-details-counter__item">
-          <h1 class="tz-service-details-counter__number tz-display-3 tz-text-neutral5">
-            <span class="tz-cn">{value}</span>{suffix}
-          </h1>
-          <p class="tz-service-details-counter__desc tz-text-neutral6 tz-text-l fw-light">
-            <span>{description}</span>
-          </p>
-        </div>
-      ))}
+      {
+        counters.map(({ value, suffix = "", description }) => (
+          <div class="tz-service-details-counter__item">
+            <h1 class="tz-service-details-counter__number tz-display-3 tz-text-neutral5">
+              <span class="tz-cn poppins-bold">{value}</span>
+              {suffix}
+            </h1>
+            <p class="tz-service-details-counter__desc tz-text-neutral6 tz-text-l fw-light montserrat-regular">
+              <span>{description}</span>
+            </p>
+          </div>
+        ))
+      }
     </div>
   </div>
 </div>

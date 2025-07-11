@@ -1,0 +1,14 @@
+@media (max-width: 576px) {
+  .tz-header1 .col-4 .tz-header1__logo img {
+    max-height: 60px;
+    width: auto;
+  }
+
+  .tz-header1 .col-4 {
+    width: 50%;
+  }
+
+  .tz-header1 .col-8 {
+    width: 49%;
+  }
+}

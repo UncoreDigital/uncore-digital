@@ -1,7 +1,11 @@
 ---
 // Accept props
-const { imageUrl = 'assets/images/breadcrumb/breadcrumb-img.jpg', title = 'Service Details' } = Astro.props;
+const {
+  imageUrl = "assets/images/breadcrumb/breadcrumb-img.jpg",
+  title = "Service Details",
+} = Astro.props;
 ---
+
 <!-- Breadcrumb Start -->
 <section class="tz-breadcrumb" style={`background-image: url('${imageUrl}');`}>
   <div class="tz-breadcrumb__overlay"></div>
@@ -9,19 +13,24 @@ const { imageUrl = 'assets/images/breadcrumb/breadcrumb-img.jpg', title = 'Servi
     <div class="row">
       <div class="col-md-6">
         <div class="tz-breadcrumb__content">
-          <h5 class="tz-breadcrumb__title tz-display-4 tz-text-neutral5 text-uppercase text-nowrap">
+          <h5
+            class="tz-breadcrumb__title tz-display-4 tz-text-neutral5 text-uppercase text-nowrap poppins-semibold"
+          >
             {title}
           </h5>
           <div class="tz-breadcrumb__menu tz-text-l text-uppercase">
             <nav aria-label="tz-breadcrumb__nav">
               <ul class="tz-breadcrumb__list">
                 <li class="tz-breadcrumb__item">
-                  <a href="/">Home</a>
+                  <a href="/" class="montserrat-regular">Home</a>
                 </li>
                 <li class="tz-breadcrumb__item active">
                   <i class="ph ph-caret-double-right"></i>
                 </li>
-                <li class="tz-breadcrumb__item active" aria-current="page">
+                <li
+                  class="tz-breadcrumb__item active montserrat-regular"
+                  aria-current="page"
+                >
                   {title}
                 </li>
               </ul>

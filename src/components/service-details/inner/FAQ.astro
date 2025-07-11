@@ -1,4 +1,3 @@
-
 ---
 type FAQItem = {
   question: string;
@@ -10,11 +9,11 @@ interface Props {
   imageUrl?: string;
 }
 
-const { faqs = [], imageUrl = "assets/images/service/service-details-img5.jpg" } = Astro.props as Props;
+const {
+  faqs = [],
+  imageUrl = "assets/images/service/service-details-img5.jpg",
+} = Astro.props as Props;
 ---
-
-
-
 
 <div class="row g-4 d-flex justify-content-between tz-pt-30 tz-pt-lg-60">
   <div class="col-md-5">
@@ -24,36 +23,36 @@ const { faqs = [], imageUrl = "assets/images/service/service-details-img5.jpg" }
   </div>
   <div class="col-md-6">
     <div class="accordion tz-faq2-accordion" id="faqAccordion">
-      {faqs.map((faq, index) => (
-        <div class="accordion-item border-0 bg-transparent">
-          <h4 class="accordion-header" id={`faqHeading${index}`}>
-            <button
-              class={`accordion-button bg-transparent shadow-none px-0 d-flex justify-content-between align-items-center ${index !== 2 ? 'collapsed' : ''}`}
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target={`#faqCollapse${index}`}
-              aria-expanded={index === 2 ? "true" : "false"}
-              aria-controls={`faqCollapse${index}`}
+      {
+        faqs.map((faq, index) => (
+          <div class="accordion-item border-0 bg-transparent">
+            <h4 class="accordion-header" id={`faqHeading${index}`}>
+              <button
+                class={`accordion-button bg-transparent shadow-none px-0 d-flex justify-content-between align-items-center poppins-bold ${index !== 2 ? "collapsed" : ""}`}
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target={`#faqCollapse${index}`}
+                aria-expanded={index === 2 ? "true" : "false"}
+                aria-controls={`faqCollapse${index}`}
+              >
+                {faq.question}
+                <i class="ph ph-plus ms-auto icon-plus" />
+                <i class="ph ph-minus ms-auto icon-minus" />
+              </button>
+            </h4>
+            <div
+              id={`faqCollapse${index}`}
+              class={`accordion-collapse collapse ${index === 2 ? "show" : ""}`}
+              aria-labelledby={`faqHeading${index}`}
+              data-bs-parent="#faqAccordion"
             >
-              {faq.question}
-              <i class="ph ph-plus ms-auto icon-plus"></i>
-              <i class="ph ph-minus ms-auto icon-minus"></i>
-            </button>
-          </h4>
-          <div
-            id={`faqCollapse${index}`}
-            class={`accordion-collapse collapse ${index === 2 ? 'show' : ''}`}
-            aria-labelledby={`faqHeading${index}`}
-            data-bs-parent="#faqAccordion"
-          >
-            <div class="accordion-body px-0 pt-2">
-              <p class="tz-text-l mb-0">
-                {faq.answer}
-              </p>
+              <div class="accordion-body px-0 pt-2">
+                <p class="tz-text-l mb-0 montserrat-regular">{faq.answer}</p>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </div>

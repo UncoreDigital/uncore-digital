@@ -4,14 +4,20 @@ interface Props {
   paragraphs?: string[];
 }
 
-const { title = "Web Design & UI/UX Development", paragraphs = [] }: Props = Astro.props;
+const { title = "Web Design & UI/UX Development", paragraphs = [] }: Props =
+  Astro.props;
 ---
-<h5 class="tz-service-details__title tz-display-4 tz-text-neutral5 text-uppercase tz-pt-30 tz-pt-lg-60">
+
+<h5
+  class="tz-service-details__title tz-display-4 tz-text-neutral5 text-uppercase tz-pt-30 tz-pt-lg-60 poppins-bold"
+>
   {title}
 </h5>
 
-{paragraphs.map((para) => (
-  <p class="tz-service-details__desc tz-text-neutral6 tz-text-l fw-light">
-    {para}
-  </p>
-))}
+{
+  paragraphs.map((para) => (
+    <p class="tz-service-details__desc tz-text-neutral6 tz-text-l fw-light montserrat-regular">
+      {para}
+    </p>
+  ))
+}
