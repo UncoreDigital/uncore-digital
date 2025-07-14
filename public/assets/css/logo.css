@@ -14,7 +14,7 @@
 }
 
 #hero {
-  /* Update the path */
+  background-image: url("assets/images/breadcrumb/breadcrumb-img.jpg"); /* Update the path */
   background-size: cover; /* Cover the entire container */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Prevent image repetition */
