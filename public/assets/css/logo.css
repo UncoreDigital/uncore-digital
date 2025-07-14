@@ -12,3 +12,15 @@
     width: 49%;
   }
 }
+
+#hero {
+  /* Update the path */
+  background-size: cover; /* Cover the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent image repetition */
+  height: 100vh; /* Full viewport height */
+}
+
+#hero-content {
+  margin-top: 200px;
+}
