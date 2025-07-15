@@ -24,3 +24,37 @@
 #hero-content {
   margin-top: 200px;
 }
+
+/* logo invert code  */
+/* .tz-header1 .tz-header1__logo img {
+  filter: brightness(0) invert(1); 
+  transition: filter 0.3s ease;
+}
+
+.tz-header1.sticky .tz-header1__logo img {
+  filter: none; 
+} */
+
+bg-white {
+  background-color: #fff !important;
+}
+
+.text-black {
+  color: #000 !important;
+}
+
+/* Default state (not sticky) — show light logo */
+.tz-header1__logo .logo-light {
+  display: none;
+}
+.tz-header1__logo .logo-dark {
+  display: block;
+}
+
+/* Sticky state — show dark logo */
+.sticky .tz-header1__logo .logo-light {
+  display: block;
+}
+.sticky .tz-header1__logo .logo-dark {
+  display: none;
+}
