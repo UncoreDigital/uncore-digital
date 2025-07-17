@@ -1,7 +1,14 @@
 ---
 import OffCanvas from "../components/OffCanvas.astro";
+// use for Home page only
 import Header from "../components/Header.astro";
+//use for pages other than Home page
+import Header2 from "../components/Header2.astro";
 import Footer from "../components/Footer.astro";
+
+// Get the current path
+const isHomePage = Astro.url.pathname === "/";
+const isHomePage2 = Astro.url.pathname === "/home2";
 ---
 
 <!doctype html>
@@ -30,6 +37,7 @@ import Footer from "../components/Footer.astro";
 
     <link rel="stylesheet" href="assets/css/fonts.css" />
     <link rel="stylesheet" href="assets/css/logo.css" />
+    <slot name="custom-css" />
   </head>
   <body class="tz-bg-neutral3">
     <div class="tz-body-overlay"></div>
@@ -57,7 +65,7 @@ import Footer from "../components/Footer.astro";
     <!-- back to to button end-->
 
     <OffCanvas />
-    <Header />
+    {isHomePage || isHomePage2 ? <Header /> : <Header2 />}
     <slot />
     <Footer />
     <script

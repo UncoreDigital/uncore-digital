@@ -42,19 +42,3 @@ bg-white {
 .text-black {
   color: #000 !important;
 }
-
-/* Default state (not sticky) — show light logo */
-.tz-header1__logo .logo-light {
-  display: none;
-}
-.tz-header1__logo .logo-dark {
-  display: block;
-}
-
-/* Sticky state — show dark logo */
-.sticky .tz-header1__logo .logo-light {
-  display: block;
-}
-.sticky .tz-header1__logo .logo-dark {
-  display: none;
-}
