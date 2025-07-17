@@ -29,21 +29,21 @@
   --------------------------------*/
 
   // Preloader
-  
+
   $(".preloader").delay(800).fadeOut("slow");
 
   // Preloader End
 
   // Bottom to top start
   $(document).ready(function () {
-    $(window).on('scroll', (function () {
+    $(window).on("scroll", function () {
       if ($(this).scrollTop() > 100) {
-        $('#scroll-top').fadeIn();
+        $("#scroll-top").fadeIn();
       } else {
-        $('#scroll-top').fadeOut();
+        $("#scroll-top").fadeOut();
       }
-    }));
-    $('#scroll-top').on( 'click', function () {
+    });
+    $("#scroll-top").on("click", function () {
       $("html, body").animate({ scrollTop: 0 }, 600);
       return false;
     });
@@ -73,7 +73,7 @@
     function handleSmoothScroll() {
       // Check if screen width is below 992px (mobile)
       if (window.innerWidth < 992) return;
-      
+
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       const stickySection = document.querySelector(
@@ -302,7 +302,7 @@
         spaceBetween: 30,
         loop: true,
         autoplay: true,
-        speed:1000,
+        speed: 1000,
         autoplay: {
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
@@ -595,16 +595,16 @@
     });
 
     // service active
-    $(".tz-service1-card").on("mouseenter", function () {
-      let __this = $(this);
-      $(".tz-service1-card").removeClass("active");
-      __this.addClass("active");
-      __this
-        .parents(".col-md-6")
-        .siblings(".col-md-6")
-        .children(".tz-service1-card")
-        .removeClass("active");
-    });
+    // $(".tz-service1-card").on("mouseenter", function () {
+    //   let __this = $(this);
+    //   $(".tz-service1-card").removeClass("active");
+    //   __this.addClass("active");
+    //   __this
+    //     .parents(".col-md-6")
+    //     .siblings(".col-md-6")
+    //     .children(".tz-service1-card")
+    //     .removeClass("active");
+    // });
 
     // Service 2
     $(".tz-service2-card").on("mouseenter", function () {
@@ -727,23 +727,17 @@
 
   //mouse move end
 
-  jQuery(window).on( 'load', function(){
-
-  //wow Animation
-  new WOW().init();
-  window.wow = new WOW(
-    {
-    boxClass:     'wow',     
-    animateClass: 'animated',
-    offset:       0,         
-    mobile:       true,      
-    live:         true,       
-    offset: 100
-  }
-  )
-  window.wow.init();
-
-});
-
-
+  jQuery(window).on("load", function () {
+    //wow Animation
+    new WOW().init();
+    window.wow = new WOW({
+      boxClass: "wow",
+      animateClass: "animated",
+      offset: 0,
+      mobile: true,
+      live: true,
+      offset: 100,
+    });
+    window.wow.init();
+  });
 })(jQuery); // End jQuery
