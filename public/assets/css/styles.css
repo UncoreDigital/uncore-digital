@@ -6905,7 +6905,8 @@ textarea:focus {
 =======================================*/
 .tz-testimonial2-trustpoint {
   padding: 2rem 1.25rem 2rem 1.25rem;
-  background: #1d1d1d;
+  /* background: #1d1d1d; */
+  background: #fff;
   text-align: center;
   max-width: 19.125rem;
   height: 100%;
@@ -6977,7 +6978,9 @@ textarea:focus {
         14.05. Testimonial Review
 =======================================*/
 .tz-testimonial2-review {
-  background: #171717;
+  /* background: #171717; */
+  background: #fff;
+  border: 1px solid black;
   padding: 1.5rem 1.5rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
