@@ -7,8 +7,7 @@ import Header2 from "../components/Header2.astro";
 import Footer from "../components/Footer.astro";
 
 // Get the current path
-const isHomePage = Astro.url.pathname === "/";
-const isHomePage2 = Astro.url.pathname === "/home2";
+// const isHomePage = Astro.url.pathname === "/";
 ---
 
 <!doctype html>
@@ -65,7 +64,7 @@ const isHomePage2 = Astro.url.pathname === "/home2";
     <!-- back to to button end-->
 
     <OffCanvas />
-    {isHomePage || isHomePage2 ? <Header /> : <Header2 />}
+    <Header />
     <slot />
     <Footer />
     <script
