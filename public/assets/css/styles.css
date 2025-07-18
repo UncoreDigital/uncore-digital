@@ -6387,7 +6387,7 @@ textarea:focus {
   width: calc(100% - 24px);
   color: #ffffff;
   padding: 0.75rem;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(15px);
   background-color: rgba(187, 187, 185, 0.1);
   text-align: center;
   z-index: 2;
