@@ -6402,7 +6402,8 @@ textarea:focus {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 11.5rem;
+  /* width: 11.5rem; */
+  width:7.5rem;
   padding: 0.375rem;
   border-radius: 7.5rem;
   display: flex;
