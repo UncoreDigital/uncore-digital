@@ -4692,7 +4692,7 @@ textarea:focus {
 .tz-banner1-content {
   width: 19.625rem;
   font-weight: 300;
-  padding-top: 4.375rem;
+  padding-top: 1.375rem;
   position: relative;
   z-index: 2;
 }
@@ -4714,7 +4714,7 @@ textarea:focus {
 }
 @media (min-width: 1440px) {
   .tz-banner1-content {
-    padding-top: 3.75rem;
+    padding-top: 0.75rem;
   }
 }
 .tz-banner1-content2 {
