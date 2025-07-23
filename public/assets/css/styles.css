@@ -4658,7 +4658,8 @@ textarea:focus {
 }
 @media (min-width: 1680px) {
   .tz-banner1__title1 {
-    font-size: 240px;
+    /* font-size: 240px; */
+    font-size: 185px;
   }
 }
 .tz-banner1__title2 {
@@ -4697,7 +4698,8 @@ textarea:focus {
 }
 @media (min-width: 1680px) {
   .tz-banner1-content {
-    width: 22.0625rem;
+    /* width: 22.0625rem; */
+    width: 50.0625rem;
   }
 }
 @media (min-width: 992px) {
@@ -6403,7 +6405,7 @@ textarea:focus {
   left: 50%;
   transform: translate(-50%, -50%);
   /* width: 11.5rem; */
-  width:7.5rem;
+  width: 7.5rem;
   padding: 0.375rem;
   border-radius: 7.5rem;
   display: flex;
