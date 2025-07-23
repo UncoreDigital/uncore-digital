@@ -8130,7 +8130,7 @@ textarea:focus {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1.25rem;
-  border-bottom: 1px solid rgba(187, 187, 185, 0.1);
+  border-bottom: 1px solid white;
   padding: 0rem 0rem 2rem 0rem;
 }
 .tz-footer__menu {
