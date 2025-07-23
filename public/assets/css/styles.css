@@ -4659,7 +4659,7 @@ textarea:focus {
 @media (min-width: 1680px) {
   .tz-banner1__title1 {
     /* font-size: 240px; */
-    font-size: 65px;
+    font-size: 70px;
   }
 }
 .tz-banner1__title2 {
@@ -7963,7 +7963,7 @@ textarea:focus {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  width: 100%;
+  width: 90%;
   position: relative;
 }
 .tz-subscribe1__search input {
@@ -8089,6 +8089,7 @@ textarea:focus {
 @media (min-width: 992px) {
   .tz-footer__socials {
     margin-bottom: 2rem;
+    margin-left: 20px;
   }
 }
 .tz-footer__social-link {
