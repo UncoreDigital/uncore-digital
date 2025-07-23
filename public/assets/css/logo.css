@@ -40,5 +40,9 @@ bg-white {
 }
 
 .text-black {
-  color: #000 !important;
+  color: #000000 !important;
+}
+
+.text-gray {
+  color: darkslategray;
 }
