@@ -1,7 +1,25 @@
 <style>
   @media (min-width: 992px) {
     .tz-banner1-info.hero-one-info {
-      padding-top: 150px; /* adjust as needed */
+      padding-top: 0px; /* adjust as needed */
+    }
+
+    .hero {
+      padding-top: 150px !important; /* adjust as needed */
+    }
+
+    .hero-desc {
+      font-size: 1.3rem !important; /* adjust as needed */
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-heading {
+      font-size: 36px; /* smaller on mobile */
+    }
+
+    .hero-desc {
+      font-size: 1rem !important; /* adjust as needed */
     }
   }
 </style>
@@ -29,20 +47,23 @@
       class="tz-banner1__shape2 floating"
     /> -->
     <div class="row g-5 d-flex justify-content-between">
-      <div class="col-xl-5">
+      <div class="col-xl-5 hero">
         <h5
-          class="tz-banner1__title1 text-uppercase tz-text-neutral5 position-relative z-1 poppins-black"
+          class="tz-banner1__title1 text-uppercase tz-text-neutral5 position-relative z-1 poppins-black hero-heading"
+          style="color:#caf301 !important;"
         >
           Your Full-Stack Digital Partner
         </h5>
-        <h5
+        <!-- <h5
           class="tz-banner1__title1 text-uppercase tz-text-secondary poppins-black"
           style="color:#caf301 !important;"
         >
           for Growth That Matters.
-        </h5>
+        </h5> -->
         <div class="tz-banner1-content">
-          <p class="tz-banner1__desc tz-text-l tz-text-neutral6 tz-pb-xl-30">
+          <p
+            class="tz-banner1__desc tz-text-l tz-text-neutral6 tz-pb-xl-30 hero-desc"
+          >
             From strategy to execution, we bring together brand storytelling,
             performance-driven marketing, modern web development, and
             future-ready digital transformation — to help your business scale
