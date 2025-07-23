@@ -5597,11 +5597,12 @@ textarea:focus {
   transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
-}
-
-.tz-wwa1-card:hover {
   border: 1px solid #caf301;
 }
+
+/* .tz-wwa1-card:hover {
+  border: 1px solid #caf301;
+} */
 @media (min-width: 992px) {
   .tz-wwa1-card {
     padding: 2.5rem 2.5rem 2.5rem 2.5rem;
