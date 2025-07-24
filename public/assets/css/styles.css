@@ -4699,7 +4699,7 @@ textarea:focus {
 @media (min-width: 1680px) {
   .tz-banner1-content {
     /* width: 22.0625rem; */
-    width: 50.0625rem;
+    width: 45.0625rem;
   }
 }
 @media (min-width: 992px) {
@@ -4841,7 +4841,7 @@ textarea:focus {
   color: #1d1d1d;
   font-size: 24px;
   display: block;
-  background-color: #ffff00;
+  background-color: #caf301;
   height: 48px;
   width: 48px;
   display: inline-flex;
