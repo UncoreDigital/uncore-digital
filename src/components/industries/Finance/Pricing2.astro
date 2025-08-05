@@ -1,0 +1,208 @@
+// Pricing.astro
+<!-- Pricing Start -->
+<div class="tz-pricing2 bg-white">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Section Heading & Toggle -->
+      <div
+        class="col-md-6 col-xl-3 wow fadeInUp"
+        data-wow-delay=".4s"
+        data-wow-duration="1"
+      >
+        <div class="tz-section-top">
+          <div class="tz-section-subtitle">
+            <span class="tz-section-subtitle__line"></span>
+            <h4 class="text-uppercase tz-text-primary poppins-bold">
+              PRICING PLAN
+            </h4>
+          </div>
+          <div
+            class="tz-section-title tz-display-2 text-uppercase poppins-bold text-black"
+          >
+            Choose your plan
+          </div>
+        </div>
+        <div class="tz-pricing2__toggle">
+          <button class="tz-pricing2__1month poppins-regular">01 Monthly</button
+          >
+          <button class="tz-pricing2__3month poppins-regular">Custom</button>
+        </div>
+      </div>
+
+      <!-- Pricing Cards -->
+      <div class="col-md-6 col-xl-3 tz-price-card">
+        <div class="tz-pricing2-card">
+          <div class="tz-pricing2-card__plan">
+            <p
+              class="tz-pricing2-card__type tz-text-m text-uppercase tz-text-primary poppins-regular"
+            >
+              Starter
+            </p>
+            <div class="tz-pricing2-card__price">
+              <div class="tz-pricing2-card__amount tz-display-3">
+                <span class="tz-price" data-1monthly="$130">$130</span>
+                <sub class="tz-text-xl fw-normal poppins-regular">/ month</sub>
+              </div>
+            </div>
+          </div>
+          <ul class="tz-pricing2-card__features tz-text-l tz-text-neutral6">
+            <li class="tz-pricing2-card__feature poppins-regular">
+              <i class="ph ph-caret-double-right"></i> LinkedIn Lead Generation
+            </li>
+            <li class="tz-pricing2-card__feature poppins-regular">
+              <i class="ph ph-caret-double-right"></i> PPC & Retargeting Ads
+            </li>
+          </ul>
+          <a
+            class="tz-button tz-button--style2 tz-textl-l poppins-regular"
+            href="/contact-us">Get Started</a
+          >
+        </div>
+      </div>
+
+      <div class="col-md-6 col-xl-3 tz-price-card">
+        <div class="tz-pricing2-card">
+          <div class="tz-pricing2-card__plan">
+            <p
+              class="tz-pricing2-card__type tz-text-m text-uppercase tz-text-primary poppins-regular"
+            >
+              Basic
+            </p>
+            <div class="tz-pricing2-card__price">
+              <div class="tz-pricing2-card__amount tz-display-3">
+                <span class="tz-price" data-1monthly="$150">$150</span>
+                <sub class="tz-text-xl fw-normal poppins-regular">/ month</sub>
+              </div>
+            </div>
+          </div>
+          <ul class="tz-pricing2-card__features tz-text-l tz-text-neutral6">
+            <li class="tz-pricing2-card__feature poppins-regular">
+              <i class="ph ph-caret-double-right"></i> Website Design & Development
+            </li>
+            <li class="tz-pricing2-card__feature poppins-regular">
+              <i class="ph ph-caret-double-right"></i> Social Media Marketing
+            </li>
+          </ul>
+          <a
+            class="tz-button tz-button--style2 tz-textl-l poppins-regular"
+            href="/contact-us">Get Started</a
+          >
+        </div>
+      </div>
+
+      <div class="col-md-6 col-xl-3 tz-price-card">
+        <div class="tz-pricing2-card">
+          <div class="tz-pricing2-card__plan">
+            <p
+              class="tz-pricing2-card__type tz-text-m text-uppercase tz-text-primary poppins-regular"
+            >
+              Premium
+            </p>
+            <div class="tz-pricing2-card__price">
+              <div class="tz-pricing2-card__amount tz-display-3">
+                <span class="tz-price" data-1monthly="$200">$200</span>
+                <sub class="tz-text-xl fw-normal poppins-regular">/ month</sub>
+              </div>
+            </div>
+          </div>
+          <ul class="tz-pricing2-card__features tz-text-l tz-text-neutral6">
+            <li class="tz-pricing2-card__feature poppins-regular">
+              <i class="ph ph-caret-double-right"></i> Website Development
+            </li>
+            <li class="tz-pricing2-card__feature poppins-regular">
+              <i class="ph ph-caret-double-right"></i> Local & National SEO
+            </li>
+            <li class="tz-pricing2-card__feature poppins-regular">
+              <i class="ph ph-caret-double-right"></i> Digital Media Marketing
+            </li>
+          </ul>
+          <a
+            class="tz-button tz-button--style2 tz-textl-l poppins-regular"
+            href="/contact-us">Get Started</a
+          >
+        </div>
+      </div>
+
+      <!-- Custom Plan -->
+      <div class="col-12 tz-custom-card" style="display: none;">
+        <div
+          class="tz-pricing2-card text-center p-5"
+          style="border: 2px dashed #ccc; background-color: #f9f9f9;"
+        >
+          <h3 class="poppins-bold tz-text-primary mb-3">Custom Plan</h3>
+          <p class="tz-text-neutral6 poppins-regular mb-4">
+            Tell us your exact requirements and we will provide a customized
+            solution tailored just for you.
+          </p>
+          <a
+            class="tz-button tz-button--style2 tz-textl-l poppins-regular"
+            href="/contact-us">Get Started</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Pricing End -->
+
+<!-- Active toggle button style -->
+<style>
+  .tz-pricing2__toggle button.active {
+    background-color: #000;
+    color: #fff;
+  }
+</style>
+
+<!-- Working Script with Type Safety -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const btnMonthly = document.querySelector(".tz-pricing2__1month");
+    const btnCustom = document.querySelector(".tz-pricing2__3month");
+    const customCard = document.querySelector(".tz-custom-card");
+    const priceCards = document.querySelectorAll(".tz-price-card");
+    const prices = document.querySelectorAll(".tz-price");
+
+    if (
+      !(btnMonthly instanceof HTMLElement) ||
+      !(btnCustom instanceof HTMLElement) ||
+      !(customCard instanceof HTMLElement)
+    ) {
+      return;
+    }
+
+    // Default View
+    btnMonthly.classList.add("active");
+    btnCustom.classList.remove("active");
+    customCard.style.display = "none";
+    priceCards.forEach((card) => {
+      if (card instanceof HTMLElement) card.style.display = "block";
+    });
+
+    btnMonthly.addEventListener("click", () => {
+      btnMonthly.classList.add("active");
+      btnCustom.classList.remove("active");
+      customCard.style.display = "none";
+
+      priceCards.forEach((card) => {
+        if (card instanceof HTMLElement) card.style.display = "block";
+      });
+
+      prices.forEach((price) => {
+        if (price instanceof HTMLElement) {
+          const monthly = price.getAttribute("data-1monthly");
+          if (monthly) price.textContent = monthly;
+        }
+      });
+    });
+
+    btnCustom.addEventListener("click", () => {
+      btnCustom.classList.add("active");
+      btnMonthly.classList.remove("active");
+      customCard.style.display = "block";
+
+      priceCards.forEach((card) => {
+        if (card instanceof HTMLElement) card.style.display = "none";
+      });
+    });
+  });
+</script>
