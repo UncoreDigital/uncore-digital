@@ -26,7 +26,7 @@
       </div>
 
       <!-- Right Form -->
-      <div class="col-lg-5 offset-lg-1">
+      <!-- <div class="col-lg-5 offset-lg-1">
         <form class="finance-hero__form">
           <h4 class="mb-3 poppins-bold">Get a Free Consultation</h4>
           <input
@@ -52,85 +52,88 @@
       </div>
     </div>
   </div>
+</section> -->
+      <!-- Finance Hero End -->
+
+      <style>
+        .finance-hero {
+          background-image: url("/assets/images/ind/cpa 2.jpg"); /* Change path */
+          background-size: cover;
+          background-position: center;
+          min-height: 70vh; /* Full height */
+          display: flex;
+          align-items: center;
+          color: #fff;
+          position: relative;
+        }
+
+        .finance-hero::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.5); /* Overlay */
+          z-index: 1;
+        }
+
+        .finance-hero .container {
+          position: relative;
+          z-index: 2;
+        }
+
+        .finance-hero__title {
+          font-size: 42px;
+          font-weight: 700;
+          margin-bottom: 20px;
+        }
+
+        .finance-hero__subtitle {
+          font-size: 18px;
+          /* max-width: 500px; */
+          margin-bottom: 20px;
+        }
+
+        .finance-hero__form {
+          background: #fff;
+          border-radius: 12px;
+          padding: 30px;
+          box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+          color: #000;
+          width: 285px;
+          margin-left: 215px;
+        }
+
+        .finance-hero__form input {
+          height: 48px;
+        }
+
+        .finance-hero__form h4 {
+          font-weight: 600;
+          margin-bottom: 1rem;
+        }
+
+        .btn {
+          background-color: #caf301;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 767px) {
+          .finance-hero {
+            padding: 60px 0;
+            min-height: auto;
+          }
+          .finance-hero__title {
+            font-size: 28px;
+          }
+          .finance-hero__subtitle {
+            font-size: 16px;
+          }
+          .finance-hero__form {
+            margin: 40px auto 0 auto; /* center form on small screens */
+            width: 100%;
+            max-width: 320px;
+          }
+        }
+      </style>
+    </div>
+  </div>
 </section>
-<!-- Finance Hero End -->
-
-<style>
-  .finance-hero {
-    background-image: url("/assets/images/ind/cpa 2.jpg"); /* Change path */
-    background-size: cover;
-    background-position: center;
-    min-height: 70vh; /* Full height */
-    display: flex;
-    align-items: center;
-    color: #fff;
-    position: relative;
-  }
-
-  .finance-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5); /* Overlay */
-    z-index: 1;
-  }
-
-  .finance-hero .container {
-    position: relative;
-    z-index: 2;
-  }
-
-  .finance-hero__title {
-    font-size: 42px;
-    font-weight: 700;
-    margin-bottom: 20px;
-  }
-
-  .finance-hero__subtitle {
-    font-size: 18px;
-    /* max-width: 500px; */
-    margin-bottom: 20px;
-  }
-
-  .finance-hero__form {
-    background: #fff;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
-    color: #000;
-    width: 285px;
-    margin-left: 215px;
-  }
-
-  .finance-hero__form input {
-    height: 48px;
-  }
-
-  .finance-hero__form h4 {
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-
-  .btn {
-    background-color: #caf301;
-  }
-
-  /* Responsive Adjustments */
-  @media (max-width: 767px) {
-    .finance-hero {
-      padding: 60px 0;
-      min-height: auto;
-    }
-    .finance-hero__title {
-      font-size: 28px;
-    }
-    .finance-hero__subtitle {
-      font-size: 16px;
-    }
-    .finance-hero__form {
-      margin: 40px auto 0 auto; /* center form on small screens */
-      width: 100%;
-      max-width: 320px;
-    }
-  }
-</style>
