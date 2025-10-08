@@ -1,0 +1,71 @@
+---
+  // No imports needed
+---
+
+<!-- Pop-up event-->
+<div id="eventPopup" class="popup-overlay">
+  <div class="popup-content">
+    <span class="popup-close" onclick="closePopup()">&times;</span>
+
+    <!-- Image Wrapper -->
+    <div class="image-wrapper">
+      <img src="/assets/images/event-banner.png" alt="Gitex Event" class="popup-image">
+
+      <!-- Transparent Clickable Button -->
+      <a href="https://calendly.com/uncoredigital/gitex-2025-coffee-chat-with-uncore-digital" 
+         target="_blank" 
+         class="image-btn"
+         aria-label="Schedule Coffee Chat"></a>
+    </div>
+  </div>
+</div>
+
+<style>
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 9999;
+}
+.popup-content {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  max-width: 90%;
+  width: 1200px;
+  overflow: hidden;
+}
+.popup-close {
+  position: absolute;
+  top: 10px; right: 15px;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1000;
+}
+.image-wrapper { position: relative; width: 100%; }
+.popup-image { width: 100%; height: auto; display: block; border-radius: 8px; }
+.image-btn {
+  position: absolute;
+  left: 50%; top: 64%;
+  transform: translate(-50%, -50%);
+  width: 60%; height: 9%;
+  cursor: pointer;
+  background: rgba(255,255,255,0);
+}
+@media (max-width: 768px) {
+  .image-btn { top: 66%; width: 70%; height: 11%; }
+}
+</style>
+
+<script>
+window.addEventListener("load", () => {
+  const popup = document.getElementById("eventPopup");
+  popup.style.display = "flex";
+});
+function closePopup() {
+  document.getElementById("eventPopup").style.display = "none";
+}
+</script>
