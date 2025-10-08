@@ -60,12 +60,13 @@
 }
 </style>
 
-<script>
-window.addEventListener("load", () => {
-  const popup = document.getElementById("eventPopup");
-  popup.style.display = "flex";
-});
-function closePopup() {
-  document.getElementById("eventPopup").style.display = "none";
-}
+<script type="module" client:load>
+  window.addEventListener("load", () => {
+    const popup = document.getElementById("eventPopup");
+    if (popup) popup.style.display = "flex";
+  });
+  window.closePopup = function () {
+    const popup = document.getElementById("eventPopup");
+    if (popup) popup.style.display = "none";
+  };
 </script>
