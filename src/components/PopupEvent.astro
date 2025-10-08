@@ -3,13 +3,14 @@
 ---
 
 <!-- Pop-up event-->
+<!-- 🔹 Popup Wrapper -->
 <div id="eventPopup" class="popup-overlay">
   <div class="popup-content">
     <span class="popup-close" onclick="closePopup()">&times;</span>
 
     <!-- Image Wrapper -->
     <div class="image-wrapper">
-      <img src="/assets/images/event-banner.png" alt="Gitex Event" class="popup-image">
+      <img src="event-banner.png" alt="Gitex Event" class="popup-image">
 
       <!-- Transparent Clickable Button -->
       <a href="https://calendly.com/uncoredigital/gitex-2025-coffee-chat-with-uncore-digital" 
@@ -21,6 +22,7 @@
 </div>
 
 <style>
+/* --- Popup Styling --- */
 .popup-overlay {
   position: fixed;
   top: 0; left: 0;
@@ -29,14 +31,16 @@
   display: flex; justify-content: center; align-items: center;
   z-index: 9999;
 }
+
 .popup-content {
   position: relative;
   background: white;
   border-radius: 12px;
   max-width: 90%;
-  width: 1200px;
+  width: 1000px;
   overflow: hidden;
 }
+
 .popup-close {
   position: absolute;
   top: 10px; right: 15px;
@@ -45,28 +49,67 @@
   cursor: pointer;
   z-index: 1000;
 }
-.image-wrapper { position: relative; width: 100%; }
-.popup-image { width: 100%; height: auto; display: block; border-radius: 8px; }
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.popup-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+/* --- Transparent Clickable Area --- */
 .image-btn {
   position: absolute;
-  left: 50%; top: 64%;
+  left: 50%;
+  top: 60%;         /* Adjust this value to match button position */
   transform: translate(-50%, -50%);
-  width: 60%; height: 9%;
+  width: 28%;       /* Adjust width to match button width */
+  height: 9%;      /* Adjust height to match button height */
   cursor: pointer;
-  background: rgba(255,255,255,0);
+  background: rgba(255, 255, 255, 0);
+  transition: all 0.25s ease;
+  border-radius: 8px;
 }
+
+
+/* --- Hover Effect --- */
+.image-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%) scale(1.03);
+}
+
+/* --- Active (Click) Effect --- */
+.image-btn:active {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+  transform: translate(-50%, -50%) scale(0.97);
+}
+
+/* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
-  .image-btn { top: 66%; width: 70%; height: 11%; }
+  .image-btn {
+    top: 60%;
+    width: 28%;
+    height: 9%;
+  }
 }
 </style>
 
-<script type="module" client:load>
-  window.addEventListener("load", () => {
-    const popup = document.getElementById("eventPopup");
-    if (popup) popup.style.display = "flex";
-  });
-  window.closePopup = function () {
-    const popup = document.getElementById("eventPopup");
-    if (popup) popup.style.display = "none";
-  };
+<script>
+// Show popup on page load
+window.addEventListener("load", () => {
+  const popup = document.getElementById("eventPopup");
+  popup.style.display = "flex";
+});
+
+// Close popup
+function closePopup() {
+  document.getElementById("eventPopup").style.display = "none";
+}
 </script>
