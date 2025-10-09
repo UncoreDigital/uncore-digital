@@ -10,7 +10,7 @@
 
     <!-- Image Wrapper -->
     <div class="image-wrapper">
-      <img src="/public/assets/images/event-banner.png" alt="Gitex Event" class="popup-image">
+      <img src="/assets/images/event-banner.png" alt="Gitex Event" class="popup-image">
 
       <!-- Transparent Clickable Button -->
       <a href="https://calendly.com/uncoredigital/gitex-2025-coffee-chat-with-uncore-digital" 
@@ -109,7 +109,13 @@ window.addEventListener("load", () => {
 });
 
 // Close popup
-function closePopup() {
+window.addEventListener("load", () => {
+  const popup = document.getElementById("eventPopup");
+  popup.style.display = "flex";
+});
+
+// Attach to window so onclick works
+window.closePopup = function() {
   document.getElementById("eventPopup").style.display = "none";
-}
+};
 </script>
