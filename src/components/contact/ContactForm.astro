@@ -100,7 +100,12 @@
             </h3>
           </div>
           <!--  -->
-          <form class="row g-4" action="#">
+          <form action="https://api.web3forms.com/submit" method="POST" class="row g-4" >
+  <!-- Web3Forms Access Key -->
+  <input type="hidden" name="access_key" value="757d2293-c9f0-4362-9e05-f171a8a03426">
+
+  <!-- Optional: Redirect after submission -->
+  <input type="hidden" name="redirect" value="/thank-you.astro">
             <div class="col-xl-6">
               <div class="form-group">
                 <label class="tz-text-l" for="name">Your Name*</label>
@@ -108,6 +113,7 @@
                   type="text"
                   class="form-control"
                   id="name"
+                  name="name"
                   placeholder="Name"
                 />
               </div>
@@ -120,6 +126,7 @@
                   type="email"
                   class="form-control"
                   id="email"
+                  name="email"
                   placeholder="Email"
                 />
               </div>
@@ -132,6 +139,7 @@
                   type="text"
                   class="form-control"
                   id="number"
+                  name="number"
                   placeholder="5345345"
                 />
               </div>
@@ -144,6 +152,7 @@
                   type="text"
                   class="form-control"
                   id="subject"
+                  name="subject"
                   placeholder="Subject"
                 />
               </div>
@@ -158,6 +167,7 @@
                 <textarea
                   class="form-control"
                   id="message"
+                  name="message"
                   rows="5"
                   placeholder="Message"></textarea>
               </div>
