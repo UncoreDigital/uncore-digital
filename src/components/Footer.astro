@@ -34,21 +34,55 @@
               >
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subscribe to Our Newsletter
               </div>
-              <form
-                action="#"
-                class="tz-subscribe1__search"
-                style="max-width: 100%;"
-              >
-                <input
-                  type="email"
-                  class="form-control tz-text-m"
-                  placeholder="Enter Your Email"
-                  autocomplete="off"
-                />
-                <button type="submit">
-                  <i class="ph ph-paper-plane-tilt"></i>
-                </button>
-              </form>
+              <form 
+  action="https://script.google.com/macros/s/AKfycbx-g2s7hyhOSZ7_KjErFA3s7cU6DZf9p42UY0wClC7pjXeJt1EnwtxcfIWMAos4i9Zc/exec" 
+  method="POST" 
+  class="tz-subscribe1__search"
+>
+<script>
+document.getElementById("subscribeForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const emailInput = this.querySelector("input[name='email']");
+  const email = emailInput.value.trim();
+
+  if (!email) return;
+
+  try {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbx2KuBVJTIllYsqjRC_mly-BtP03GVvPaqdqWUBLnZ82Dum7qNb2inkSR7fk8HZJ0o3/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ email })
+    });
+
+    const text = await response.text();
+    console.log("Response:", text);
+
+    if (response.ok && text.includes("OK")) {
+      document.getElementById("subscribeMessage").style.display = "block";
+      document.getElementById("subscribeError").style.display = "none";
+      emailInput.value = "";
+    } else {
+      throw new Error("Script returned error");
+    }
+  } catch (err) {
+    console.error("Error:", err);
+    document.getElementById("subscribeError").style.display = "block";
+    document.getElementById("subscribeMessage").style.display = "none";
+  }
+});
+</script>
+
+  <input 
+    type="email" 
+    name="email" 
+    placeholder="Enter Your Email" 
+    required 
+    class="form-control tz-text-m"
+  />
+  <button type="submit"><i class="ph ph-paper-plane-tilt"></i></button>
+</form>
+
             </div>
           </div>
           <div class="tz-footer__socials">
