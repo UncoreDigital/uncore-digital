@@ -5,6 +5,7 @@ import Header from "../components/Header.astro";
 //use for pages other than Home page
 import Header2 from "../components/Header2.astro";
 import Footer from "../components/Footer.astro";
+import Chatbot from "../components/Chatbot.astro";
 
 // Get the current path
 // const isHomePage = Astro.url.pathname === "/";
@@ -66,6 +67,7 @@ import Footer from "../components/Footer.astro";
     <OffCanvas />
     <Header2 />
     <slot />
+    <Chatbot />
     <Footer />
     <script
       is:inline
