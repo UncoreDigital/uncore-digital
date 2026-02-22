@@ -101,12 +101,7 @@
             </h3>
           </div>
           <!--  -->
-          <form action="https://api.web3forms.com/submit" method="POST" class="row g-4" >
-  <!-- Web3Forms Access Key -->
-  <input type="hidden" name="access_key" value="757d2293-c9f0-4362-9e05-f171a8a03426">
-
-  <!-- Optional: Redirect after submission -->
-  <input type="hidden" name="redirect" value="/thank-you.astro">
+          <form id="contactForm" class="row g-4">
             <div class="col-xl-6">
               <div class="form-group">
                 <label class="tz-text-l" for="name">Your Name*</label>
@@ -177,8 +172,8 @@
             <!-- Submit Button -->
             <div class="col-12" style="Padding-bottom:40px;">
               <button
-                type="
-              submit"
+                id="submitButton"
+                type="submit"
                 class="tz-button tz-button--full tz-text-l tz-bg-primary poppins-bold"
               >
                 Send Message
@@ -192,3 +187,158 @@
 
   <!-- Contact End -->
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contactForm") as HTMLFormElement;
+    const submitBtn = document.getElementById(
+      "submitButton",
+    ) as HTMLButtonElement;
+
+    // Helper to create and show a toast
+    const showToast = (message: string, isError = false) => {
+      // Create toast element
+      const toast = document.createElement("div");
+      toast.textContent = message;
+      toast.style.position = "fixed";
+      toast.style.bottom = "20px";
+      toast.style.left = "50%";
+      toast.style.transform = "translateX(-50%)";
+      toast.style.padding = "12px 24px";
+      toast.style.borderRadius = "8px";
+      toast.style.color = "#fff";
+      toast.style.backgroundColor = isError
+        ? "#e74c3c"
+        : "var(--tz-primary-color, #1a365d)";
+      toast.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
+      toast.style.fontWeight = "600";
+      toast.style.fontFamily = "'Poppins', sans-serif";
+      toast.style.zIndex = "9999";
+      toast.style.transition = "opacity 0.3s ease-in-out";
+      toast.style.opacity = "0";
+
+      document.body.appendChild(toast);
+
+      // Animate in
+      setTimeout(() => {
+        toast.style.opacity = "1";
+      }, 10);
+
+      // Remove after 3.5 seconds
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    };
+
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        // Prevent default submission to validate and send to Apps Script first
+        e.preventDefault();
+
+        // Capture form fields
+        const formData = new FormData(form);
+        const name = formData.get("name")?.toString().trim() || "";
+        const email = formData.get("email")?.toString().trim() || "";
+        const number = formData.get("number")?.toString().trim() || "";
+        const subject = formData.get("subject")?.toString().trim() || "";
+        const message = formData.get("message")?.toString().trim() || "";
+
+        // Validation: Verify essential fields before building HTML string
+        if (!name || !email || !message) {
+          showToast("Please fill in all required fields.", true);
+          return;
+        }
+
+        // Disable button immediately to prevent double submissions
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Sending...";
+          submitBtn.style.opacity = "0.7";
+          submitBtn.style.cursor = "not-allowed";
+        }
+
+        const source = "Uncore Digital";
+
+        // HTML Generation: Create a template literal string named htmlBody
+        const htmlBody = `
+          <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 20px auto; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); background-color: #ffffff; border: 1px solid #eaeaea;">
+            <div style="text-align: center; margin-bottom: 25px;">
+              <h2 style="color: #1a365d; margin: 0; font-size: 24px; padding-bottom: 15px; border-bottom: 2px solid #e2e8f0;">New Contact Submission</h2>
+            </div>
+            
+            <table style="width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+              <tr>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; font-weight: 600; color: #4a5568; background-color: #f7fafc; width: 35%;">Source</td>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #2d3748; background-color: #ffffff;">${source}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; font-weight: 600; color: #4a5568; background-color: #f7fafc;">Name</td>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #2d3748; background-color: #ffffff;">${name}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; font-weight: 600; color: #4a5568; background-color: #f7fafc;">Email</td>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #2d3748; background-color: #ffffff;">
+                    <a href="mailto:${email}" style="color: #3182ce; text-decoration: none;">${email}</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; font-weight: 600; color: #4a5568; background-color: #f7fafc;">Phone Number</td>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #2d3748; background-color: #ffffff;">${number}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; font-weight: 600; color: #4a5568; background-color: #f7fafc;">Subject</td>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #2d3748; background-color: #ffffff;">${subject}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 15px; border-right: 1px solid #e2e8f0; font-weight: 600; color: #4a5568; background-color: #f7fafc; vertical-align: top;">Message</td>
+                <td style="padding: 12px 15px; color: #2d3748; background-color: #ffffff; line-height: 1.5; white-space: pre-wrap;">${message}</td>
+              </tr>
+            </table>
+            
+            <div style="margin-top: 20px; font-size: 12px; color: #a0aec0; text-align: center;">
+              This email was generated automatically from the ${source} website contact form.
+            </div>
+          </div>
+        `;
+
+        // Payload for Google Apps Script
+        const payload = {
+          source: source,
+          htmlBody: htmlBody,
+        };
+
+        try {
+          // Replace 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' with your actual endpoint URL
+          const appsScriptUrl =
+            "https://script.google.com/macros/s/AKfycbzB9_gPPiXv_kz2_zklYxuQccyxL76FGxCg3ASBa_te3KvyBLZsgusRsCCVRSfWIMJ__g/exec";
+
+          await fetch(appsScriptUrl, {
+            method: "POST",
+            body: JSON.stringify(payload),
+          });
+
+          form.reset();
+          showToast("Thank you! Your message has been sent successfully.");
+        } catch (error) {
+          console.error(
+            "Error sending form data to Google Apps Script:",
+            error,
+          );
+          showToast(
+            "There was an error submitting your form. Please try again.",
+            true,
+          );
+        } finally {
+          // Re-enable button
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Send Message";
+            submitBtn.style.opacity = "1";
+            submitBtn.style.cursor = "pointer";
+          }
+        }
+      });
+    }
+  });
+</script>
