@@ -408,23 +408,36 @@
       });
     }
 
-    // Brand Carousel
-    const brandCarousel = $(".brand-carousel");
-    if (brandCarousel.length) {
-      new Swiper(".brand-carousel", {
-        speed: 4000,
-        spaceBetween: 30,
-        slidesPerView: "auto",
-        observerUpdate: true,
-        loop: true,
-        autoplay: true,
-        autoplay: {
-          delay: 0,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: false,
-        },
-      });
-    }
+    // Brand Carousel: constant-speed, seamless infinite loop
+function initBrandCarousel() {
+  const brandCarousel = $(".brand-carousel");
+  if (!brandCarousel.length) return;
+
+  new Swiper(".brand-carousel", {
+    speed: 5800,                 // one equal-width slide per 5.8s (260px slot + 30px gap)
+    spaceBetween: 30,
+    slidesPerView: "auto",
+    loop: true,
+    loopedSlides: 30,            // Swiper 8 and older: number of slides
+    loopAdditionalSlides: 10,    // Swiper 9+: extra clones so it never runs out
+    freeMode: true,
+    allowTouchMove: false,
+    observer: true,
+    observeParents: true,
+    autoplay: {
+      delay: 0,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: false,
+    },
+  });
+}
+
+// Wait until all logos are loaded so slide widths are measured correctly
+if (document.readyState === "complete") {
+  initBrandCarousel();
+} else {
+  window.addEventListener("load", initBrandCarousel);
+}
     // Text Slider 1
     const textSlider = $(".tz-text-slider");
     if (textSlider.length) {
