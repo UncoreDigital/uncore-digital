@@ -1,4 +1,4 @@
-<!-- Team Start --><!-- add : tz-project2 tz-bg-neutral2 remove: tz-team1  for dark background-->
+<!-- Team Start -->
 <section class="tz-team1 bg-white">
   <div class="container">
     <div class="tz-section-top">
@@ -40,120 +40,292 @@
         </div>
       </div>
     </div>
-    <div class="row g-4">
+
+    <!-- Cards: add or remove a "team-grid__item" block and the layout adjusts itself -->
+    <div class="team-grid">
+      <!-- Card 2 -->
       <div
-        class="col-md-6 col-xl-3 wow fadeInUp img-custom-anim-left"
-        data-wow-delay=".3s"
-      >
-        <div class="tz-team1-card">
-          <div class="tz-team1-card__image">
-            <img src="assets/images/team/1.png" alt="Rishva" />
-          </div>
-          <div class="tz-team1-card__info">
-            <p
-              class="tz-team1-card__name tz-text-xl fw-bold montserrat-regular text-black"
-            >
-              Rishva Kharidia
-            </p>
-            <p
-              class="tz-team1-card__title tz-text-m fw-light mb-0 montserrat-regular text-black"
-            >
-              Chief of Ops & Experience
-            </p>
-          </div>
-          <div class="tz-team1-card__links">
-            <a href="#" class="tz-team1-card__social"
-              ><i class="ph ph-instagram-logo"></i></a
-            >
-            <a href="#" class="tz-team1-card__social"
-              ><i class="ph ph-linkedin-logo"></i></a
-            >
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-md-6 col-xl-3 wow fadeInUp img-custom-anim-left"
+        class="team-grid__item wow fadeInUp img-custom-anim-left"
         data-wow-delay=".4s"
       >
-        <div class="tz-team1-card">
-          <div class="tz-team1-card__image">
-            <img src="assets/images/team/2.png" alt="Purvi Trivedi" />
+        <div class="team-card">
+          <div class="team-card__photo">
+            <img src="/assets/images/team/1.png" alt="Pratik Chaplot" />
           </div>
-          <div class="tz-team1-card__info">
-            <p class="tz-team1-card__name tz-text-xl fw-bold text-black montserrat-regular">
-              Purvi Trivedi
+          <div class="team-card__body">
+            <h3 class="team-card__name poppins-bold">Pratik Chaplot</h3>
+            <p class="team-card__role montserrat-semibold">CEO</p>
+            <p class="team-card__desc montserrat-regular">
+              Sets the vision and strategy for Uncore Digital, guiding the team
+              toward long-term growth and client success.
             </p>
-            <p class="tz-team1-card__title tz-text-m fw-light mb-0 text-black montserrat-regular">
-              Chief of Tech & Implementation
-            </p>
-          </div>
-          <div class="tz-team1-card__links">
-            <a href="#" class="tz-team1-card__social"
-              ><i class="ph ph-instagram-logo"></i></a
-            >
-            <a href="#" class="tz-team1-card__social"
-              ><i class="ph ph-linkedin-logo"></i></a
-            >
+            <a
+  href="https://www.linkedin.com/in/pratik-chaplot/"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="team-card__social"
+>
+  <svg
+    class="team-card__icon"
+    viewBox="0 0 24 24"
+    width="18"
+    height="18"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="5" cy="5.5" r="1" fill="currentColor" />
+    <path d="M5 10v9" />
+    <path d="M10 19v-9" />
+    <path d="M10 14a4 4 0 0 1 8 0v5" />
+  </svg>
+  <span>LinkedIn</span>
+</a>
           </div>
         </div>
       </div>
+
+<!-- Card 1 -->
       <div
-        class="col-md-6 col-xl-3 wow fadeInUp img-custom-anim-left"
+        class="team-grid__item wow fadeInUp img-custom-anim-left"
+        data-wow-delay=".3s"
+      >
+        <div class="team-card">
+          <div class="team-card__photo">
+            <img src="/assets/images/team/2.png" alt="Rishva Kharidia" />
+          </div>
+          <div class="team-card__body">
+            <h3 class="team-card__name poppins-bold">Rishva Kharidia</h3>
+            <p class="team-card__role montserrat-semibold">COO</p>
+            <p class="team-card__desc montserrat-regular">
+              Leads day-to-day operations and client experience, making sure
+              every project is delivered smoothly and on time.
+            </p>
+            <a
+  href="https://www.linkedin.com/in/rishvakharidia/"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="team-card__social"
+>
+  <svg
+    class="team-card__icon"
+    viewBox="0 0 24 24"
+    width="18"
+    height="18"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="5" cy="5.5" r="1" fill="currentColor" />
+    <path d="M5 10v9" />
+    <path d="M10 19v-9" />
+    <path d="M10 14a4 4 0 0 1 8 0v5" />
+  </svg>
+  <span>LinkedIn</span>
+</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div
+        class="team-grid__item wow fadeInUp img-custom-anim-left"
         data-wow-delay=".5s"
       >
-        <div class="tz-team1-card">
-          <div class="tz-team1-card__image">
-            <img src="assets/images/team/3.png" alt="Gabriel Ilyayeff" />
+        <div class="team-card">
+          <div class="team-card__photo">
+            <img src="/assets/images/team/3.png" alt="Gabriel Ilyayeff" />
           </div>
-          <div class="tz-team1-card__info">
-            <p
-              class="tz-team1-card__name tz-text-xl fw-semibold montserrat-regular text-black"
-            >
-              Gabriel Ilyayeff
-            </p>
-            <p
-              class="tz-team1-card__title tz-text-m fw-light mb-0 montserrat-regular text-black"
-            >
+          <div class="team-card__body">
+            <h3 class="team-card__name poppins-bold">Gabriel Ilyayeff</h3>
+            <p class="team-card__role montserrat-semibold">
               Strategic Partner - USA
             </p>
-          </div>
-          <div class="tz-team1-card__links">
-            <a href="#" class="tz-team1-card__social"
-              ><i class="ph ph-instagram-logo"></i></a
-            >
-            <a href="#" class="tz-team1-card__social"
-              ><i class="ph ph-linkedin-logo"></i></a
-            >
+            <p class="team-card__desc montserrat-regular">
+              Supports partnerships and business growth across the USA, helping
+              clients connect with the right digital solutions.
+            </p>
+            <a
+  href="https://https://www.linkedin.com/in/gilyayeff/"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="team-card__social"
+>
+  <svg
+    class="team-card__icon"
+    viewBox="0 0 24 24"
+    width="18"
+    height="18"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="5" cy="5.5" r="1" fill="currentColor" />
+    <path d="M5 10v9" />
+    <path d="M10 19v-9" />
+    <path d="M10 14a4 4 0 0 1 8 0v5" />
+  </svg>
+  <span>LinkedIn</span>
+</a>
           </div>
         </div>
       </div>
-      <div
-        class="col-md-6 col-xl-3 wow fadeInUp img-custom-anim-left"
-        data-wow-delay=".6s"
+
+      <!-- Card 4 -->
+      <!-- <div
+        class="team-grid__item wow fadeInUp img-custom-anim-left"
+        data-wow-delay=".3s"
       >
-        <div class="tz-team1-card">
-          <div class="tz-team1-card__image">
-            <img src="assets/images/team/4.png" alt="Rachit Trivedi" />
+        <div class="team-card">
+          <div class="team-card__photo">
+            <img src="/assets/images/team/4.png" alt="Rachit Trivedi" />
           </div>
-          <div class="tz-team1-card__info">
-            <p class="tz-team1-card__name tz-text-xl fw-semibold text-black montserrat-regular">
-              Rachit Trivedi
-            </p>
-            <p class="tz-team1-card__title tz-text-m fw-light mb-0 text-black montserrat-regular">
-              Technology Consultant
-            </p>
-          </div>
-          <div class="tz-team1-card__links">
-            <a href="#" class="tz-team1-card__social"
-              ><i class="ph ph-instagram-logo"></i></a
-            >
-            <a href="#" class="tz-team1-card__social"
-              ><i class="ph ph-linkedin-logo"></i></a
-            >
+          <div class="team-card__body">
+            <h3 class="team-card__name poppins-bold">Rachit Trivedi</h3>
+            <p class="team-card__role montserrat-semibold">Technology Consultant</p>
+            <p class="team-card__desc montserrat-regular">Short description here.</p>
+            <a href="#" class="team-card__social">
+              <i class="ph ph-linkedin-logo"></i>
+              <span>LinkedIn</span>
+            </a>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </section>
 <!-- Team End -->
+
+<style>
+  /* Flexible team grid: any number of cards, last row stays centered */
+  .team-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 28px;
+  }
+
+  .team-grid__item {
+    flex: 0 1 320px; /* card width: raise or lower this to resize */
+    max-width: 100%;
+  }
+
+  /* Card */
+  .team-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e4e8ee;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(16, 24, 40, 0.06);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .team-card:hover {
+    transform: translateY(-6px);
+    border-color: #caf310;
+    box-shadow: 0 14px 30px rgba(16, 24, 40, 0.14);
+  }
+
+  /* Photo */
+  .team-card__photo {
+    aspect-ratio: 4 / 4.4;
+    overflow: hidden;
+    background: #f3f5f7;
+  }
+
+  .team-card__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .team-card:hover .team-card__photo img {
+    transform: scale(1.04);
+  }
+
+  /* Text area */
+  .team-card__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 22px 22px;
+    background: #fff;
+  }
+
+  .team-card__name {
+    margin: 0 0 4px;
+    font-size: 20px;
+    line-height: 1.25;
+    color: #101828;
+  }
+
+  .team-card__role {
+    margin: 0 0 12px;
+    font-size: 14px;
+    color: #5f7a00; /* darker green so it reads on white; #caf310 is too light */
+  }
+
+  .team-card__desc {
+    margin: 0 0 18px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a5565;
+  }
+
+  /* LinkedIn pill button, pinned to the bottom so buttons line up across cards */
+  .team-card__social {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    border: 1px solid #dfe3e8;
+    border-radius: 10px;
+    background: #fff;
+    color: #4a5565;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      background-color 0.25s ease,
+      border-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .team-card__social i {
+    font-size: 16px;
+  }
+
+  .team-card__social:hover {
+    background: #caf310;
+    border-color: #caf310;
+    color: #000;
+  }
+
+  @media (max-width: 767px) {
+    .team-grid__item {
+      flex: 0 1 100%;
+      max-width: 340px;
+    }
+  }
+</style>

@@ -8214,3 +8214,103 @@ textarea:focus {
 }
 
 /*# sourceMappingURL=styles.css.map */
+
+
+  /* All cards look like the white (active) card */
+  .tz-service1 .tz-service1-card,
+  .tz-service1 .tz-service1-card.active {
+    background: #f5f4f0 !important;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Hover: white turns green (copy the exact hex from your Contact Us button) */
+  .tz-service1 .tz-service1-card:hover,
+  .tz-service1 .tz-service1-card.active:hover {
+    background: #ccf900 !important;
+  }
+
+  /* Make sure content is visible on every card, not only the active one */
+  .tz-service1 .tz-service1-card__content,
+  .tz-service1 .tz-service1-card__number {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Text is always black, in normal and hover states */
+  .tz-service1 .tz-service1-card a,
+  .tz-service1 .tz-service1-card__number,
+  .tz-service1 .tz-service1-card__title,
+  .tz-service1 .tz-service1-card p,
+  .tz-service1 .tz-service1-card h3,
+  .tz-service1 .tz-service1-card h5,
+  .tz-service1 .tz-service1-card:hover a,
+  .tz-service1 .tz-service1-card:hover .tz-service1-card__number,
+  .tz-service1 .tz-service1-card:hover .tz-service1-card__title,
+  .tz-service1 .tz-service1-card:hover p,
+  .tz-service1 .tz-service1-card:hover h3,
+  .tz-service1 .tz-service1-card:hover h5 {
+    color: #000 !important;
+  }
+
+  /* Keep the icon and arrow images black */
+  .tz-service1 .tz-service1-card__shape img,
+  .tz-service1 .tz-service1-card__footer img {
+    filter: brightness(0) !important;
+  }
+
+  /* Remove the big roman numerals (the black bars) */
+.tz-service1 .tz-service1-card__number,
+.tz-service1 .tz-service1-card:hover .tz-service1-card__number {
+  display: none !important;
+}
+/* Remove the semi-circle at the bottom of each card */
+.tz-service1 .tz-service1-card__circle,
+.tz-service1 .tz-service1-card:hover .tz-service1-card__circle {
+  display: none !important;
+}
+
+
+/* Footer text links: grey normally, green on hover (credit link excluded) */
+footer a:not(.tz-button):not(.tz-button-circle):not(.tz-footer__credit-link):not(:has(i)),
+footer a:not(.tz-button):not(.tz-button-circle):not(.tz-footer__credit-link):not(:has(i)):visited {
+  color: #9a9a9a !important;
+  transition: color 0.3s ease;
+}
+
+footer a:not(.tz-button):not(.tz-button-circle):not(.tz-footer__credit-link):not(:has(i)):hover,
+footer a:not(.tz-button):not(.tz-button-circle):not(.tz-footer__credit-link):not(:has(i)):focus {
+  color: #caf310 !important;
+}
+
+/* "Powered by Uncore Digital" link: always #CAF310 */
+footer a.tz-footer__credit-link,
+footer a.tz-footer__credit-link:visited,
+footer a.tz-footer__credit-link:hover,
+footer a.tz-footer__credit-link:focus {
+  color: #caf310 !important;
+}
+
+
+/* About: keep the big "25+" inside its own column at every zoom/width */
+.tz-about1-experience {
+  container-type: inline-size;   /* lets the number size itself from the column width */
+}
+
+.tz-about1-experience__counter {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+}
+
+.tz-about1-experience__counter-number {
+  font-size: min(250px, 68cqw) !important;  /* shrinks if the column is narrow */
+  line-height: 1 !important;
+  margin: 0;
+}
+
+.tz-about1-experience__counter-plus {
+  position: static !important;               /* stops the + from floating over the text */
+  font-size: min(60px, 16cqw) !important;
+  line-height: 1;
+  margin-left: 4px;
+}

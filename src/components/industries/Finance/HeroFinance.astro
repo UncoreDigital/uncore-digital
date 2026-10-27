@@ -5,135 +5,284 @@
       <!-- Left Content -->
       <div class="col-lg-6 text-white text-lg-start text-center">
         <h1 class="finance-hero__title poppins-bold">
-          Partner us in just $299to take care of your digital presence.
+          Digitally Powering Modern Manufacturing
         </h1>
         <p class="finance-hero__subtitle poppins-regular">
-          At Uncore Digital, we provide Marketing that understands numbers and
-          makes yours better. From website conversions to lead generation, we
-          help you grow with clarity, compliance, and strategy.
+          We help manufacturers build a strong digital presence with
+          high-performance websites, targeted marketing, and lead generation
+          strategies. From OEMs to industrial suppliers, we streamline your
+          communication, showcase your capabilities, and drive B2B growth with
+          data-backed digital solutions.
         </p>
         <div class="tz-buttons d-flex justify-content-start">
           <a
-            href="/contact-us"
+            href="#"
             class="tz-button-white text-uppercase fw-medium tz-text-m"
           >
             Book a free consultation</a
           >
-          <a class="tz-button-white-circle" href="/contact-us"
+          <a class="tz-button-white-circle" href="#"
             ><i class="ph ph-arrow-up-right"></i></a
           >
         </div>
       </div>
 
       <!-- Right Form -->
-      <!-- <div class="col-lg-5 offset-lg-1">
-        <form class="finance-hero__form">
-          <h4 class="mb-3 poppins-bold">Get a Free Consultation</h4>
-          <input
-            type="text"
-            class="form-control mb-3"
-            placeholder="Your Name"
-            required
-          />
-          <input
-            type="email"
-            class="form-control mb-3"
-            placeholder="Email Address"
-            required
-          />
-          <input
-            type="tel"
-            class="form-control mb-3"
-            placeholder="Phone Number"
-            required
-          />
-          <button type="submit" class="btn w-100 poppins-bold">Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</section> -->
-      <!-- Finance Hero End -->
-
-      <style>
-        .finance-hero {
-          background-image: url("/assets/images/ind/cpa 2.jpg"); /* Change path */
-          background-size: cover;
-          background-position: center;
-          min-height: 70vh; /* Full height */
-          display: flex;
-          align-items: center;
-          color: #fff;
-          position: relative;
-        }
-
-        .finance-hero::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.5); /* Overlay */
-          z-index: 1;
-        }
-
-        .finance-hero .container {
-          position: relative;
-          z-index: 2;
-        }
-
-        .finance-hero__title {
-          font-size: 42px;
-          font-weight: 700;
-          margin-bottom: 20px;
-        }
-
-        .finance-hero__subtitle {
-          font-size: 18px;
-          /* max-width: 500px; */
-          margin-bottom: 20px;
-        }
-
-        .finance-hero__form {
-          background: #fff;
-          border-radius: 12px;
-          padding: 30px;
-          box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
-          color: #000;
-          width: 285px;
-          margin-left: 215px;
-        }
-
-        .finance-hero__form input {
-          height: 48px;
-        }
-
-        .finance-hero__form h4 {
-          font-weight: 600;
-          margin-bottom: 1rem;
-        }
-
-        .btn {
-          background-color: #caf301;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 767px) {
-          .finance-hero {
-            padding: 60px 0;
-            min-height: auto;
-          }
-          .finance-hero__title {
-            font-size: 28px;
-          }
-          .finance-hero__subtitle {
-            font-size: 16px;
-          }
-          .finance-hero__form {
-            margin: 40px auto 0 auto; /* center form on small screens */
-            width: 100%;
-            max-width: 320px;
-          }
-        }
-      </style>
+       <div class="col-lg-5 offset-lg-1">
+        <form id="financeHeroForm" class="finance-hero__form">
+  <h4 class="mb-3 poppins-bold">Get a Free Consultation</h4>
+  <input
+    type="text"
+    class="form-control mb-3"
+    id="fh-name"
+    name="name"
+    placeholder="Your Name"
+    required
+  />
+  <input
+    type="email"
+    class="form-control mb-3"
+    id="fh-email"
+    name="email"
+    placeholder="Email Address"
+    required
+  />
+  <input
+    type="tel"
+    class="form-control mb-3"
+    id="fh-number"
+    name="number"
+    placeholder="Phone Number"
+    required
+  />
+  <button
+    id="financeHeroSubmit"
+    type="submit"
+    class="btn w-100 poppins-bold"
+  >
+    Submit
+  </button>
+</form>
+      </div> 
     </div>
   </div>
 </section>
+<!-- Finance Hero End -->
+
+<style>
+  .finance-hero {
+    background-image: url("/assets/images/blog/blog1-img2.jpg"); /* Change path */
+    background-size: cover;
+    background-position: center;
+    min-height: 70vh; /* Full height */
+    display: flex;
+    align-items: center;
+    color: #fff;
+    position: relative;
+  }
+
+  .finance-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5); /* Overlay */
+    z-index: 1;
+  }
+
+  .finance-hero .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  .finance-hero__title {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .finance-hero__subtitle {
+    font-size: 18px;
+    /* max-width: 500px; */
+    margin-bottom: 20px;
+  }
+
+  .finance-hero__form {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    color: #000;
+    width: 285px;
+    margin-left: 215px;
+  }
+
+  .finance-hero__form input {
+    height: 48px;
+  }
+
+  .finance-hero__form h4 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .btn {
+    background-color: #caf301;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 767px) {
+    .finance-hero {
+      padding: 60px 0;
+      min-height: auto;
+    }
+    .finance-hero__title {
+      font-size: 28px;
+    }
+    .finance-hero__subtitle {
+      font-size: 16px;
+    }
+    .finance-hero__form {
+      margin: 40px auto 0 auto; /* center form on small screens */
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+</style>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("financeHeroForm") as HTMLFormElement;
+    const submitBtn = document.getElementById(
+      "financeHeroSubmit",
+    ) as HTMLButtonElement;
+
+    // Toast message (same as the contact form)
+    const showToast = (message: string, isError = false) => {
+      const toast = document.createElement("div");
+      toast.textContent = message;
+      toast.style.position = "fixed";
+      toast.style.bottom = "20px";
+      toast.style.left = "50%";
+      toast.style.transform = "translateX(-50%)";
+      toast.style.padding = "12px 24px";
+      toast.style.borderRadius = "8px";
+      toast.style.color = "#fff";
+      toast.style.backgroundColor = isError
+        ? "#e74c3c"
+        : "var(--tz-primary-color, #1a365d)";
+      toast.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
+      toast.style.fontWeight = "600";
+      toast.style.fontFamily = "'Poppins', sans-serif";
+      toast.style.zIndex = "9999";
+      toast.style.transition = "opacity 0.3s ease-in-out";
+      toast.style.opacity = "0";
+
+      document.body.appendChild(toast);
+      setTimeout(() => (toast.style.opacity = "1"), 10);
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    };
+
+    // Stops user input from injecting HTML into the email
+    const escapeHtml = (value: string) =>
+      value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const name = formData.get("name")?.toString().trim() || "";
+        const email = formData.get("email")?.toString().trim() || "";
+        const number = formData.get("number")?.toString().trim() || "";
+
+        if (!name || !email || !number) {
+          showToast("Please fill in all required fields.", true);
+          return;
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Sending...";
+          submitBtn.style.opacity = "0.7";
+          submitBtn.style.cursor = "not-allowed";
+        }
+
+        const source = "Uncore Digital";
+        const formName = "Finance Page - Get a Free Consultation";
+
+        const htmlBody = `
+          <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 20px auto; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); background-color: #ffffff; border: 1px solid #eaeaea;">
+            <div style="text-align: center; margin-bottom: 25px;">
+              <h2 style="color: #1a365d; margin: 0; font-size: 24px; padding-bottom: 15px; border-bottom: 2px solid #e2e8f0;">New Consultation Request</h2>
+            </div>
+
+            <table style="width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+              <tr>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; font-weight: 600; color: #4a5568; background-color: #f7fafc; width: 35%;">Source</td>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #2d3748; background-color: #ffffff;">${source}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; font-weight: 600; color: #4a5568; background-color: #f7fafc;">Form</td>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #2d3748; background-color: #ffffff;">${formName}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; font-weight: 600; color: #4a5568; background-color: #f7fafc;">Name</td>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #2d3748; background-color: #ffffff;">${escapeHtml(name)}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; font-weight: 600; color: #4a5568; background-color: #f7fafc;">Email</td>
+                <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #2d3748; background-color: #ffffff;">
+                  <a href="mailto:${escapeHtml(email)}" style="color: #3182ce; text-decoration: none;">${escapeHtml(email)}</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 15px; border-right: 1px solid #e2e8f0; font-weight: 600; color: #4a5568; background-color: #f7fafc;">Phone Number</td>
+                <td style="padding: 12px 15px; color: #2d3748; background-color: #ffffff;">${escapeHtml(number)}</td>
+              </tr>
+            </table>
+
+            <div style="margin-top: 20px; font-size: 12px; color: #a0aec0; text-align: center;">
+              This email was generated automatically from the ${source} website (${formName}).
+            </div>
+          </div>
+        `;
+
+        const payload = { source: source, htmlBody: htmlBody };
+
+        try {
+          const appsScriptUrl =
+            "https://script.google.com/macros/s/AKfycbzB9_gPPiXv_kz2_zklYxuQccyxL76FGxCg3ASBa_te3KvyBLZsgusRsCCVRSfWIMJ__g/exec";
+
+          await fetch(appsScriptUrl, {
+            method: "POST",
+            body: JSON.stringify(payload),
+          });
+
+          form.reset();
+          showToast("Thank you! We'll contact you shortly.");
+        } catch (error) {
+          console.error("Error sending form data to Google Apps Script:", error);
+          showToast(
+            "There was an error submitting your form. Please try again.",
+            true,
+          );
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit";
+            submitBtn.style.opacity = "1";
+            submitBtn.style.cursor = "pointer";
+          }
+        }
+      });
+    }
+  });
+</script>

@@ -28,13 +28,14 @@
             </p>
 
             <!-- Footer Subscribe (styled like CTA) -->
+            <!--
             <div class="tz-footer__subscribe mt-4">
               <div
                 class="tz-text-neutral6 text-uppercase poppins-bold mb-2 small"
               >
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subscribe to Our Newsletter
               </div>
-              <form 
+<form 
   action="https://script.google.com/macros/s/AKfycbx-g2s7hyhOSZ7_KjErFA3s7cU6DZf9p42UY0wClC7pjXeJt1EnwtxcfIWMAos4i9Zc/exec" 
   method="POST" 
   class="tz-subscribe1__search"
@@ -83,21 +84,21 @@ document.getElementById("subscribeForm").addEventListener("submit", async functi
   <button type="submit"><i class="ph ph-paper-plane-tilt"></i></button>
 </form>
 
-            </div>
+            </div> -->
           </div>
-          <div class="tz-footer__socials">
-            <a href="#" class="tz-footer__social-link">
-              <i class="ph ph-facebook-logo"></i>
-            </a>
-            <!-- <a href="#" class="tz-footer__social-link">
-              <i class="ph ph-youtube-logo"></i> --> <!--changed youtube--> 
-            </a>
-            <a href="#" class="tz-footer__social-link">
-              <i class="ph ph-instagram-logo"></i>
-            </a>
-            <a href="#" class="tz-footer__social-link">
-              <i class="ph ph-linkedin-logo"></i> <!--changed discord-->
-            </a>
+          <div class="d-inline-flex flex-column align-items-center gap-2 mt-4">
+            <span class="tz-text-neutral6 montserrat-regular tz-text-l mb-0 text-center">Visit us at :</span>
+            <div class="tz-footer__socials d-flex justify-content-center gap-2 mb-0">
+              <a href="https://in.pinterest.com/uncoredigital/"target="_blank" rel="noopener noreferrer" class="tz-footer__social-link">
+                <i class="ph-fill ph-pinterest-logo"></i> 
+              </a>
+              <a href="https://www.instagram.com/uncoredigital/" target="_blank" rel="noopener noreferrer" class="tz-footer__social-link">
+                <i class="ph ph-instagram-logo"></i>
+              </a>
+              <a href="https://www.linkedin.com/company/uncoredigital" target="_blank" rel="noopener noreferrer" class="tz-footer__social-link">
+                <i class="ph ph-linkedin-logo"></i> 
+              </a>
+            </div>
           </div>
         </div>
 
@@ -175,7 +176,7 @@ document.getElementById("subscribeForm").addEventListener("submit", async functi
                       <li>
                         <a
                           class="tz-footer__link tz-text-l montserrat-regular"
-                          href="/">Our Team</a
+                          href="/team">Our Team</a
                         >
                       </li>
                     </ul>
@@ -284,3 +285,11 @@ document.getElementById("subscribeForm").addEventListener("submit", async functi
   </div>
 </footer>
 <!-- Footer Ends here -->
+
+<style>
+  /* Force social icons to retain their color after being visited */
+  .tz-footer__socials .tz-footer__social-link:visited,
+  .tz-footer__socials .tz-footer__social-link:visited i {
+    color: #ccff00 !important; /* Replace with your exact neon green hex or CSS variable if different */
+  }
+</style>
