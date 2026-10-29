@@ -1,0 +1,474 @@
+---
+import Layout from "../layouts/Layout.astro"; // must match your layout's real file name and folder
+---
+
+<Layout
+  title="Support Area | Uncore Digital"
+  description="Get help from Uncore Digital: contact channels, what to include in a support request, support for existing clients, and answers to common questions."
+>
+  <!-- Canonical + social tags, placed in <head> through your existing custom-css slot -->
+  <Fragment slot="custom-css">
+    <link rel="canonical" href="https://uncoredigital.com/support-area" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Support Area | Uncore Digital" />
+    <meta
+      property="og:description"
+      content="Get help from Uncore Digital: contact channels, support requests and helpful resources."
+    />
+    <meta property="og:url" content="https://uncoredigital.com/support-area" />
+  </Fragment>
+
+  <!-- Support Area Hero Start -->
+  <section class="sa-hero">
+    <div class="container">
+      <span class="sa-hero__eyebrow poppins-bold">Support</span>
+      <h1 class="sa-hero__title poppins-bold">Support Area</h1>
+      <p class="sa-hero__meta montserrat-regular">
+        Need help with your project, website or campaign? You're in the right
+        place.
+      </p>
+    </div>
+  </section>
+  <!-- Support Area Hero End -->
+
+  <!-- Support Area Start -->
+  <section class="sa-body">
+    <div class="container">
+      <div class="sa-layout">
+        <!-- Table of contents -->
+        <aside class="sa-toc">
+          <p class="sa-toc__title poppins-bold">On this page</p>
+          <ol class="sa-toc__list montserrat-regular">
+            <li><a href="#overview">How we help</a></li>
+            <li><a href="#contact-channels">Contact channels</a></li>
+            <li><a href="#what-to-include">What to include in your request</a></li>
+            <li><a href="#existing-clients">Support for existing clients</a></li>
+            <li><a href="#common-topics">Common support topics</a></li>
+            <li><a href="#response">Response and escalation</a></li>
+            <li><a href="#security">Reporting a security or privacy concern</a></li>
+            <li><a href="#resources">Helpful resources</a></li>
+            <li><a href="#contact">Contact us</a></li>
+          </ol>
+        </aside>
+
+        <!-- Support text -->
+        <article class="sa-content montserrat-regular">
+          <section id="overview">
+            <h2 class="poppins-bold">1. How we help</h2>
+            <p>
+              Our job doesn't end at launch. Whether you're a current client, a
+              past client or a new visitor with a question, our team is here to
+              help you get the most out of your website, product or marketing
+              campaigns.
+            </p>
+            <p>
+              Use this page to find the right way to reach us, to tell us what
+              you need, and to find answers to common questions quickly.
+            </p>
+          </section>
+
+          <section id="contact-channels">
+            <h2 class="poppins-bold">2. Contact channels</h2>
+            <p>Choose whichever way is easiest for you:</p>
+            <div class="sa-cards">
+              <a
+                class="sa-card"
+                href="mailto:connect@uncoredigital.com?subject=Support%20Request"
+              >
+                <i class="ph ph-envelope-simple-open"></i>
+                <span class="sa-card__label poppins-bold">Email us</span>
+                <span class="sa-card__value">connect@uncoredigital.com</span>
+              </a>
+              <a class="sa-card" href="tel:+919725518964">
+                <i class="ph ph-phone-call"></i>
+                <span class="sa-card__label poppins-bold">Call us</span>
+                <span class="sa-card__value">+91 97255 18964</span>
+              </a>
+              <a class="sa-card" href="/contact-us">
+                <i class="ph ph-chat-circle-text"></i>
+                <span class="sa-card__label poppins-bold">Contact form</span>
+                <span class="sa-card__value">Send us a message online</span>
+              </a>
+            </div>
+            <p>
+              You can also use the chat assistant on our website for quick
+              questions, and our team will follow up where needed.
+            </p>
+          </section>
+
+          <section id="what-to-include">
+            <h2 class="poppins-bold">3. What to include in your request</h2>
+            <p>
+              The more detail you give us, the faster we can help. Where
+              possible, please include:
+            </p>
+            <ul>
+              <li>Your name, company and the best email or phone number to reach you</li>
+              <li>The website, product or campaign your question is about</li>
+              <li>A clear description of the issue or what you would like changed</li>
+              <li>Steps to reproduce the problem, if something isn't working</li>
+              <li>Screenshots, screen recordings or links that show the issue</li>
+              <li>The device, browser and operating system you were using</li>
+              <li>How urgent the request is and any deadline that applies</li>
+            </ul>
+            <p>
+              Please don't send passwords, payment card numbers or other
+              sensitive credentials by email or chat. If we need access to a
+              system, we will agree a secure way to share it with you.
+            </p>
+          </section>
+
+          <section id="existing-clients">
+            <h2 class="poppins-bold">4. Support for existing clients</h2>
+            <p>
+              If you're already working with us, contact your project lead
+              directly, or write to us at the email above and mention your
+              project name so we can route your request to the right person.
+            </p>
+            <p>
+              The scope of post-launch support, such as maintenance, updates and
+              optimisation, is agreed with you before the project begins. If
+              you're unsure what your agreement covers, just ask and we will
+              explain.
+            </p>
+          </section>
+
+          <section id="common-topics">
+            <h2 class="poppins-bold">5. Common support topics</h2>
+            <p>We regularly help with:</p>
+            <ul>
+              <li>
+                <strong>Websites and apps:</strong> bugs, content updates,
+                speed, hosting and new features
+              </li>
+              <li>
+                <strong>Digital marketing:</strong> campaign questions,
+                reporting and changes to your strategy
+              </li>
+              <li>
+                <strong>Digital transformation:</strong> CRM setups, workflow
+                automation and internal tools
+              </li>
+              <li>
+                <strong>Accounts and access:</strong> logins, permissions and
+                handover of files and assets
+              </li>
+              <li>
+                <strong>Billing and agreements:</strong> questions about
+                proposals, invoices and scope
+              </li>
+            </ul>
+          </section>
+
+          <section id="response">
+            <h2 class="poppins-bold">6. Response and escalation</h2>
+            <p>
+              We aim to respond to every request promptly and to keep you
+              updated until it is resolved. Urgent issues, such as a website
+              being down, should be reported by phone and email so that the
+              right person sees them quickly.
+            </p>
+            <p>
+              If you feel a request hasn't been handled the way it should, tell
+              us at
+              <a href="mailto:connect@uncoredigital.com?subject=Escalation"
+                >connect@uncoredigital.com</a
+              >
+              with the subject "Escalation" and we will review it at a senior
+              level.
+            </p>
+          </section>
+
+          <section id="security">
+            <h2 class="poppins-bold">7. Reporting a security or privacy concern</h2>
+            <p>
+              If you think you've found a security problem on our website, or
+              you have a concern about how your personal information is handled,
+              please email
+              <a href="mailto:connect@uncoredigital.com?subject=Security%20Report"
+                >connect@uncoredigital.com</a
+              >
+              with a short description of what you found. Please give us a
+              reasonable time to look into it before sharing the details
+              publicly.
+            </p>
+            <p>
+              To exercise your privacy rights, such as access or deletion of
+              your data, see our <a href="/privacy-policy">Privacy Policy</a>.
+            </p>
+          </section>
+
+          <section id="resources">
+            <h2 class="poppins-bold">8. Helpful resources</h2>
+            <ul>
+              <li>
+                <a href="/faq">Frequently Asked Questions</a> – quick answers
+                about our services, process, pricing and support
+              </li>
+              <li>
+                <a href="/privacy-policy">Privacy Policy</a> – how we collect
+                and protect your information
+              </li>
+              <li>
+                <a href="/our-portfolio">Our Portfolio</a> – examples of our
+                work
+              </li>
+              <li>
+                <a href="/team">Our Team</a> – the people you will be working
+                with
+              </li>
+            </ul>
+          </section>
+
+          <section id="contact">
+            <h2 class="poppins-bold">9. Contact us</h2>
+            <p>Still need a hand? Reach out and we'll get back to you.</p>
+            <div class="sa-contact">
+              <p><strong>Uncore Digital</strong></p>
+              <p>
+                Email:
+                <a href="mailto:connect@uncoredigital.com"
+                  >connect@uncoredigital.com</a
+                >
+              </p>
+              <p>Phone: +91 97255 18964</p>
+              <p>626 RXR Plaza, Uniondale, NY 11556, USA</p>
+              <p>1013, Ratnanjali, Solitaire, India</p>
+            </div>
+          </section>
+        </article>
+      </div>
+    </div>
+  </section>
+  <!-- Support Area End -->
+</Layout>
+
+<style>
+  /* Hero */
+  .sa-hero {
+    background: #121212;
+    padding: 190px 0 70px; /* top padding clears the fixed header */
+    text-align: center;
+  }
+
+  .sa-hero__eyebrow {
+    display: inline-block;
+    color: #caf310;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+
+  .sa-hero__title {
+    color: #fff;
+    font-size: clamp(36px, 6vw, 64px);
+    line-height: 1.1;
+    margin: 0 0 14px;
+  }
+
+  .sa-hero__meta {
+    color: #a3a3a3;
+    font-size: 16px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* Body */
+  .sa-body {
+    background: #fff;
+    padding: 70px 0 100px;
+  }
+
+  .sa-layout {
+    display: grid;
+    grid-template-columns: 270px minmax(0, 1fr);
+    gap: 60px;
+    align-items: start;
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+
+  /* Table of contents */
+  .sa-toc {
+    position: sticky;
+    top: 130px;
+    padding: 24px;
+    background: #f6f7f4;
+    border: 1px solid #e8eadf;
+    border-radius: 12px;
+  }
+
+  .sa-toc__title {
+    margin: 0 0 14px;
+    font-size: 16px;
+    color: #000;
+  }
+
+  .sa-toc__list {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .sa-toc__list a {
+    color: #4a5565;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .sa-toc__list a:hover {
+    color: #000;
+    text-decoration: underline;
+    text-decoration-color: #caf310;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 3px;
+  }
+
+  /* Content */
+  .sa-content {
+    color: #2b2f36;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .sa-content section {
+    scroll-margin-top: 130px;
+    padding-bottom: 36px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid #ececec;
+  }
+
+  .sa-content section:last-child {
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .sa-content h2 {
+    color: #000;
+    font-size: 26px;
+    margin: 0 0 16px;
+  }
+
+  .sa-content p {
+    margin: 0 0 14px;
+    color: #2b2f36;
+  }
+
+  .sa-content ul {
+    margin: 0 0 14px;
+    padding-left: 22px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .sa-content li {
+    color: #2b2f36;
+  }
+
+  .sa-content a:not(.sa-card) {
+    color: #000;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: #caf310;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 3px;
+  }
+
+  .sa-content a:not(.sa-card):hover {
+    background: #caf310;
+    text-decoration: none;
+  }
+
+  /* Contact channel cards */
+  .sa-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin: 18px 0 20px;
+  }
+
+  .sa-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 22px 20px;
+    background: #fff;
+    border: 1px solid #e4e8ee;
+    border-radius: 12px;
+    color: #101828;
+    text-decoration: none;
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .sa-card:hover {
+    transform: translateY(-4px);
+    border-color: #caf310;
+    box-shadow: 0 10px 24px rgba(16, 24, 40, 0.1);
+  }
+
+  .sa-card i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 6px;
+    background: #caf310;
+    border-radius: 50%;
+    color: #000;
+    font-size: 20px;
+  }
+
+  .sa-card__label {
+    font-size: 16px;
+    color: #000;
+  }
+
+  .sa-card__value {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #4a5565;
+    word-break: break-word;
+  }
+
+  .sa-contact {
+    margin-top: 16px;
+    padding: 22px 26px;
+    background: #f6f7f4;
+    border-left: 4px solid #caf310;
+    border-radius: 8px;
+  }
+
+  .sa-contact p {
+    margin: 0 0 4px;
+  }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    .sa-hero {
+      padding: 150px 0 50px;
+    }
+
+    .sa-layout {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .sa-toc {
+      position: static;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .sa-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
