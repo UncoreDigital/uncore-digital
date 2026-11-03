@@ -1,0 +1,153 @@
+---
+// Shared admin top bar: shows the logged-in admin and a Log Out menu
+---
+
+<header class="topbar">
+  <div class="profile" id="profile">
+    <button
+      type="button"
+      class="profile__btn"
+      id="profile-btn"
+      aria-haspopup="menu"
+      aria-expanded="false"
+    >
+      <span id="admin-email">Admin User</span>
+      <span class="profile__avatar" id="admin-avatar">A</span>
+      <i class="ph ph-caret-down"></i>
+    </button>
+
+    <div class="profile__menu" id="profile-menu" role="menu">
+      <button type="button" class="profile__logout" id="logout-btn" role="menuitem">
+        <i class="ph ph-sign-out"></i> Log Out
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  import { supabase } from '../../lib/supabase.js';
+
+  const profile = document.getElementById('profile');
+  const profileBtn = document.getElementById('profile-btn');
+  const emailEl = document.getElementById('admin-email');
+  const avatarEl = document.getElementById('admin-avatar');
+  const logoutBtn = document.getElementById('logout-btn');
+
+  // Show the logged-in admin's name
+  const { data: { session } } = await supabase.auth.getSession();
+  const email = session?.user?.email;
+  if (email) {
+    const name = email.split('@')[0];
+    if (emailEl) emailEl.textContent = name;
+    if (avatarEl) avatarEl.textContent = name.charAt(0).toUpperCase();
+  }
+
+  // Click to open on touch screens (hover and keyboard focus work through CSS)
+  profileBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = profile?.classList.toggle('open');
+    profileBtn.setAttribute('aria-expanded', String(!!open));
+  });
+
+  document.addEventListener('click', () => {
+    profile?.classList.remove('open');
+    profileBtn?.setAttribute('aria-expanded', 'false');
+  });
+
+  // Log out
+  logoutBtn?.addEventListener('click', async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      alert('Error logging out: ' + error.message);
+    } else {
+      window.location.href = '/admin/login';
+    }
+  });
+</script>
+
+<style>
+  .topbar {
+    height: var(--header-height, 64px);
+    flex-shrink: 0;
+    background-color: var(--bg-surface, #fff);
+    border-bottom: 1px solid var(--border-color, #e5e7eb);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 var(--gutter, 32px);
+  }
+
+  .profile {
+    position: relative;
+  }
+
+  .profile__btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text-muted, #6b7280);
+    padding: 8px 0;
+  }
+
+  .profile__btn:hover {
+    opacity: 0.8;
+  }
+
+  .profile__avatar {
+    width: 32px;
+    height: 32px;
+    background-color: var(--text-main, #111827);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  /* No gap between the button and the menu, so hover doesn't drop while moving the mouse */
+  .profile__menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 160px;
+    padding: 4px 0;
+    background: var(--bg-surface, #fff);
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+
+  .profile:hover .profile__menu,
+  .profile:focus-within .profile__menu,
+  .profile.open .profile__menu {
+    display: block;
+  }
+
+  .profile__logout {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--danger-red, #ef4444);
+  }
+
+  .profile__logout:hover {
+    background-color: var(--surface-hover, #f3f4f6);
+  }
+</style>

@@ -1,10 +1,174 @@
 ---
+// src/pages/blogs.astro
+import { supabase } from '../lib/supabase.js';
 import Layout from '../layouts/Layout.astro';
-import BreadCrum from '../components/blogs/BreadCrum.astro';
-import BlogList from '../components/blogs/BlogList.astro';
+
+const { data: blogs } = await supabase
+  .from('Blogs')
+  .select('*')
+  .eq('status', 'Published');
 ---
 
-<Layout>
-    <BreadCrum />
-    <BlogList />
+<Layout title="Our Blog - Uncore Digital">
+  <section class="blog-list">
+    <div class="container">
+      <header class="blog-list__head text-center">
+        <span class="blog-eyebrow montserrat-regular">Insights &amp; Updates</span>
+        <h1 class="blog-list__title">Our Latest Articles</h1>
+      </header>
+
+      {blogs && blogs.length > 0 ? (
+        <div class="row g-4">
+          {blogs.map((blog) => (
+            <div class="col-md-6 col-xl-4">
+              <article class="blog-card">
+                <a href={`/blog/${blog.slug}`} class="blog-card__media" tabindex="-1" aria-hidden="true">
+                  <img src={blog.cover_image_url} alt={blog.title} loading="lazy" />
+                </a>
+                <div class="blog-card__body">
+                  <span class="blog-badge">{blog.category}</span>
+                  <h2 class="blog-card__title">
+                    <a href={`/blog/${blog.slug}`}>{blog.title}</a>
+                  </h2>
+                  <p class="blog-card__excerpt">{blog.excerpt}</p>
+
+                  <div class="tz-buttons blog-card__cta">
+                    <a class="tz-button text-uppercase fw-medium tz-text-m montserrat-regular" href={`/blog/${blog.slug}`}>
+                      Read More
+                    </a>
+                    <a class="tz-button-circle" href={`/blog/${blog.slug}`} aria-label={`Read ${blog.title}`}>
+                      <i class="ph ph-arrow-up-right"></i>
+                    </a>
+                  </div>
+                </div>
+              </article>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p class="blog-empty text-center">New articles are on the way. Check back soon.</p>
+      )}
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .blog-list {
+    background: #111;
+    padding: 160px 0 100px;
+    min-height: 100vh;
+  }
+
+  .blog-list__head {
+    margin-bottom: 56px;
+  }
+
+  .blog-eyebrow {
+    display: inline-block;
+    color: #ccff00;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  /* Teko ships as a single bold file registered at weight 400,
+     so keep weight normal to avoid fake double-bolding */
+  .blog-list__title {
+    font-family: "Teko", sans-serif;
+    font-weight: 400;
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1.05;
+    color: #fff;
+    margin: 0;
+  }
+
+  .blog-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .blog-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(204, 255, 0, 0.12);
+  }
+
+  .blog-card__media {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #222;
+  }
+  .blog-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .blog-card:hover .blog-card__media img {
+    transform: scale(1.05);
+  }
+
+  .blog-card__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 24px;
+  }
+
+  .blog-badge {
+    align-self: flex-start;
+    background: #111;
+    color: #ccff00;
+    font-family: "Outfit", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+
+  /* Updated Card Title to Outfit */
+  .blog-card__title {
+    font-family: "Outfit", sans-serif;
+    font-weight: 700;
+    font-size: 24px; /* Scaled down slightly since Outfit is wider than Teko */
+    line-height: 1.3;
+    margin: 0 0 12px;
+  }
+  .blog-card__title a {
+    color: #111;
+    text-decoration: none;
+  }
+  .blog-card__title a:hover {
+    color: #4a5d00;
+  }
+
+  .blog-card__excerpt {
+    font-family: "Outfit", sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+    margin: 0 0 24px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Keeps excerpts uniform in height */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .blog-card__cta {
+    margin-top: auto;
+  }
+
+  .blog-empty {
+    font-family: "Outfit", sans-serif;
+    color: #aaa;
+    font-size: 18px;
+  }
+</style>

@@ -1,0 +1,415 @@
+---
+import { supabase } from '../../lib/supabase.js';
+import AdminSidebar from './AdminSidebar.astro';
+import AdminTopbar from './AdminTopbar.astro';
+
+
+// Fetch leads data
+const { data: leads, error } = await supabase
+  .from('Leads')
+  .select('*')
+  .order('created_at', { ascending: false });
+
+if (error) console.error("Database Error:", error);
+
+// Format date
+const formatDate = (dateStr) => {
+  if (!dateStr) return 'N/A';
+  return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+};
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leads - Uncore Digital Admin</title>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    :root {
+      --bg-main: #f9fafb;
+      --bg-surface: #ffffff;
+      --border-color: #e5e7eb;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --primary-brand: #d4ff00;
+      --surface-hover: #f3f4f6;
+      --danger-red: #ef4444;
+      --sidebar-width: 260px;
+      --header-height: 64px; 
+      --gutter: 32px;        
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg-main); color: var(--text-main); display: flex; min-height: 100vh; }
+
+    /* Sidebar Layout */
+    .sidebar { width: var(--sidebar-width); background-color: var(--bg-surface); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; position: fixed; height: 100vh; overflow-y: auto; }
+    .sidebar-brand { height: var(--header-height); flex-shrink: 0; padding: 0 var(--gutter); display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-color); }
+    .sidebar-brand img { width: 32px; height: 32px; object-fit: contain; }
+    .sidebar-brand .brand-name { font-size: 18px; font-weight: 700; color: var(--text-main); letter-spacing: -0.02em; }
+    .sidebar-menu { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .menu-item { display: flex; align-items: center; gap: 12px; padding: 10px 16px; text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; border-radius: 8px; transition: all 0.2s; }
+    .menu-item:hover { background-color: var(--surface-hover); color: var(--text-main); }
+    .menu-item.active { background-color: var(--primary-brand); color: #111111; font-weight: 600; }
+    .menu-item i { font-size: 20px; }
+
+    /* Main Content */
+    .main-wrapper { flex: 1; margin-left: var(--sidebar-width); display: flex; flex-direction: column; }
+    .topbar { height: var(--header-height); background-color: var(--bg-surface); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: flex-end; padding: 0 var(--gutter); }
+    .user-profile { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text-muted); }
+    .user-avatar { width: 32px; height: 32px; background-color: var(--text-main); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+    .content { padding: var(--gutter); }
+    
+    .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+    .page-title h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; color: var(--text-main); }
+    .page-title p { color: var(--text-muted); font-size: 14px; }
+    
+    .btn-outline { background-color: #fff; color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s; }
+    .btn-outline:hover { background-color: var(--surface-hover); }
+
+    .btn-primary { background-color: var(--text-main); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .btn-primary:hover:not(:disabled) { background-color: #374151; }
+    .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+
+    /* Table Container */
+    .table-container { background-color: var(--bg-surface); border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 1px 3px rgba(0,0,0,0.05); overflow: hidden; }
+    .table-toolbar { padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; gap: 16px; }
+    
+    .search-box { position: relative; width: 300px; }
+    .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+    .search-box input, .filter-select { padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 14px; color: var(--text-main); outline: none; }
+    .search-box input { width: 100%; padding-left: 36px; }
+    .filter-select { width: 150px; background-color: #fff; cursor: pointer; }
+
+    /* Table */
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th { padding: 16px 24px; font-size: 12px; font-weight: 700; color: var(--text-main); border-bottom: 1px solid var(--border-color); text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 16px 24px; font-size: 14px; color: var(--text-main); border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    
+    .lead-info { display: flex; flex-direction: column; gap: 4px; }
+    .lead-name { font-weight: 600; color: var(--text-main); }
+    .lead-meta { font-size: 13px; color: var(--text-muted); }
+    
+    .status-dropdown { padding: 6px 12px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 13px; font-weight: 500; background-color: #fff; cursor: pointer; outline: none; }
+    
+    .action-icons { display: flex; gap: 12px; }
+    .icon-btn { background: none; border: none; font-size: 18px; cursor: pointer; color: var(--text-muted); transition: 0.2s; text-decoration: none; display: flex; align-items: center; justify-content: center;}
+    .icon-btn:hover { color: var(--text-main); transform: scale(1.1); }
+    .icon-btn.edit:hover { color: #2563eb; }
+    .icon-btn.delete:hover { color: var(--danger-red); }
+
+    /* Modal Styles */
+    .d-none { display: none !important; }
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-content { background: var(--bg-surface); padding: 32px; border-radius: 8px; width: 100%; max-width: 500px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .modal-header h3 { font-size: 20px; font-weight: 700; color: var(--text-main); }
+    
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;}
+    .form-control { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 14px; outline: none; }
+    .form-control:focus { border-color: var(--text-main); }
+    .form-actions { margin-top: 24px; display: flex; justify-content: flex-end; gap: 12px; }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <AdminSidebar />
+
+  <!-- Main Wrapper -->
+  <div class="main-wrapper">
+    <AdminTopbar />
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Leads</h1>
+          <p>Enquiries from your website contact form</p>
+        </div>
+        <button id="export-btn" class="btn-outline">
+          <i class="ph ph-download-simple"></i> Export CSV
+        </button>
+      </div>
+
+      <div class="table-container">
+        <!-- Toolbar with IDs for JavaScript selection -->
+        <div class="table-toolbar">
+          <div class="search-box">
+            <i class="ph ph-magnifying-glass"></i>
+            <input type="text" id="search-input" placeholder="Search leads...">
+          </div>
+          <select id="status-filter" class="filter-select">
+            <option value="all">All statuses</option>
+            <option value="New">New</option>
+            <option value="Contacted">Contacted</option>
+            <option value="Qualified">Qualified</option>
+          </select>
+        </div>
+
+        <table id="leads-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">#</th>
+              <th>LEAD</th>
+              <th>PHONE</th>
+              <th>SOURCE</th>
+              <th>STATUS</th>
+              <th>DATE</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody id="leads-tbody">
+            {leads && leads.map((lead, index) => (
+              <tr class="lead-row">
+                <td style="color: var(--text-muted); font-weight: 500;">{index + 1}</td>
+                <td>
+                  <div class="lead-info">
+                    <span class="lead-name">{lead.name}</span>
+                    <span class="lead-meta">{lead.email} {lead.subject ? `· ${lead.subject}` : ''}</span>
+                  </div>
+                </td>
+                <td style="color: var(--text-muted);">{lead.number || '—'}</td>
+                <td style="color: var(--text-muted);">{lead.source || 'Website'}</td>
+                <td>
+                  <select class="status-dropdown status-update" data-id={lead.id}>
+                    <option value="New" selected={lead.status === 'New'}>New</option>
+                    <option value="Contacted" selected={lead.status === 'Contacted'}>Contacted</option>
+                    <option value="Qualified" selected={lead.status === 'Qualified'}>Qualified</option>
+                  </select>
+                </td>
+                <td style="color: var(--text-muted);">{formatDate(lead.created_at)}</td>
+                <td>
+                  <div class="action-icons">
+                    <!-- Edit Button replaces email button -->
+                    <button class="icon-btn edit-btn edit" 
+                      data-id={lead.id} 
+                      data-name={lead.name} 
+                      data-email={lead.email} 
+                      data-phone={lead.number} 
+                      data-subject={lead.subject} 
+                      title="Edit Lead">
+                      <i class="ph ph-pencil-simple" style="pointer-events: none;"></i>
+                    </button>
+                    <button class="icon-btn delete-btn delete" data-id={lead.id} title="Delete">
+                      <i class="ph ph-trash" style="pointer-events: none;"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+            {(!leads || leads.length === 0) && (
+              <tr id="empty-row"><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">No leads found yet.</td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- Edit Lead Modal -->
+  <div id="edit-modal" class="modal-overlay d-none">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Edit Lead Details</h3>
+        <button id="close-modal" class="icon-btn"><i class="ph ph-x"></i></button>
+      </div>
+      <form id="edit-lead-form">
+        <input type="hidden" id="edit-id" />
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="edit-name" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="edit-email" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="text" id="edit-phone" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <input type="text" id="edit-subject" class="form-control" />
+        </div>
+        <div class="form-actions">
+          <button type="button" id="cancel-modal" class="btn-outline">Cancel</button>
+          <button type="submit" class="btn-primary" id="save-edit-btn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+<script>
+  import { supabase } from '../../lib/supabase.js';
+
+  // Protect route (kept once, at the top)
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) window.location.href = '/admin/login';
+
+  // ==========================================
+  // 1. Search and Filter Functionality
+  // ==========================================
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const statusFilter = document.getElementById('status-filter') as HTMLSelectElement;
+  const tableRows = document.querySelectorAll<HTMLElement>('.lead-row');
+
+  function filterTable() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const filterValue = statusFilter.value;
+
+    tableRows.forEach((row) => {
+      // Text of the row to search against
+      const rowText = row.innerText.toLowerCase();
+
+      // Current selected status of the row
+      const statusSelect = row.querySelector<HTMLSelectElement>('.status-update');
+      const currentStatus = statusSelect ? statusSelect.value : '';
+
+      const matchesSearch = rowText.includes(searchTerm);
+      const matchesFilter = filterValue === 'all' || currentStatus === filterValue;
+
+      row.style.display = matchesSearch && matchesFilter ? '' : 'none';
+    });
+  }
+
+  searchInput.addEventListener('input', filterTable);
+  statusFilter.addEventListener('change', filterTable);
+
+  // ==========================================
+  // 2. Edit Modal Functionality
+  // ==========================================
+  const editModal = document.getElementById('edit-modal') as HTMLElement;
+  const editForm = document.getElementById('edit-lead-form') as HTMLFormElement;
+  const closeModal = document.getElementById('close-modal') as HTMLElement;
+  const cancelModal = document.getElementById('cancel-modal') as HTMLElement;
+
+  const editId = document.getElementById('edit-id') as HTMLInputElement;
+  const editName = document.getElementById('edit-name') as HTMLInputElement;
+  const editEmail = document.getElementById('edit-email') as HTMLInputElement;
+  const editPhone = document.getElementById('edit-phone') as HTMLInputElement;
+  const editSubject = document.getElementById('edit-subject') as HTMLInputElement;
+
+  // Treats missing, "null" and "undefined" values as empty
+  const clean = (value: string | null) =>
+    value && value !== 'null' && value !== 'undefined' ? value : '';
+
+  // Open modal and fill in the lead's data
+  document.querySelectorAll('.edit-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const button = (e.target as HTMLElement).closest('.edit-btn') as HTMLElement;
+
+      editId.value = clean(button.getAttribute('data-id'));
+      editName.value = clean(button.getAttribute('data-name'));
+      editEmail.value = clean(button.getAttribute('data-email'));
+      editPhone.value = clean(button.getAttribute('data-phone'));
+      editSubject.value = clean(button.getAttribute('data-subject'));
+
+      editModal.classList.remove('d-none');
+    });
+  });
+
+  // Close modal helpers
+  const hideModal = () => editModal.classList.add('d-none');
+  closeModal.addEventListener('click', hideModal);
+  cancelModal.addEventListener('click', hideModal);
+
+  // Save changes
+  editForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const saveBtn = document.getElementById('save-edit-btn') as HTMLButtonElement;
+    saveBtn.textContent = 'Saving...';
+    saveBtn.disabled = true;
+
+    const updates = {
+      name: editName.value,
+      email: editEmail.value,
+      number: editPhone.value,
+      subject: editSubject.value,
+    };
+
+    const { error } = await supabase.from('Leads').update(updates).eq('id', editId.value);
+
+    if (error) {
+      alert('Error updating lead: ' + error.message);
+      saveBtn.textContent = 'Save Changes';
+      saveBtn.disabled = false;
+    } else {
+      window.location.reload(); // Refresh to show the new data
+    }
+  });
+
+  // ==========================================
+  // 3. Status Change, Delete, and CSV Export
+  // ==========================================
+
+  // Handle status change
+  document.querySelectorAll<HTMLSelectElement>('.status-update').forEach((select) => {
+    select.addEventListener('change', async () => {
+      const id = select.getAttribute('data-id');
+      const newStatus = select.value;
+
+      const { error } = await supabase.from('Leads').update({ status: newStatus }).eq('id', id);
+      if (error) {
+        alert('Error updating status: ' + error.message);
+        window.location.reload();
+      } else {
+        // Re-run the filter in case they filtered by a specific status
+        filterTable();
+      }
+    });
+  });
+
+  // Handle delete
+  document.querySelectorAll('.delete-btn').forEach((button) => {
+    button.addEventListener('click', async (e) => {
+      const targetBtn = (e.target as HTMLElement).closest('.delete-btn');
+      const id = targetBtn?.getAttribute('data-id');
+
+      if (id && confirm('Are you sure you want to delete this lead?')) {
+        const { error } = await supabase.from('Leads').delete().eq('id', id);
+        if (error) alert('Could not delete: ' + error.message);
+        else window.location.reload();
+      }
+    });
+  });
+
+  // Handle CSV export (only visible rows, so it respects search and filter)
+  document.getElementById('export-btn')?.addEventListener('click', () => {
+    const rows = Array.from(
+      document.querySelectorAll<HTMLElement>('#leads-table tr')
+    ).filter((row) => row.style.display !== 'none');
+    let csvContent = '';
+
+    rows.forEach((row) => {
+      const cols = row.querySelectorAll<HTMLElement>('th, td');
+      if (cols.length === 1) return; // Skip the empty-message row
+
+      const rowData = Array.from(cols)
+        .map((col, index) => {
+          if (index === 6) return null; // Skip the Actions column
+
+          const select = col.querySelector('select');
+          if (select) return `"${select.value}"`;
+
+          const text = col.innerText.replace(/(\r\n|\n|\r)/gm, ' ').replace(/"/g, '""');
+          return `"${text}"`;
+        })
+        .filter((item) => item !== null);
+
+      csvContent += rowData.join(',') + '\n';
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute('download', `Leads_Export_${new Date().toLocaleDateString()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+</script>
+</body>
+</html>

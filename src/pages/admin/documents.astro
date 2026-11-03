@@ -1,0 +1,713 @@
+---
+// Static preview page: sample data only, not connected to Supabase.
+const formatDate = (doc) => {
+  const raw = doc.created_at;
+  return raw ? new Date(raw).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A';
+};
+
+const formatSize = (bytes) => {
+  if (!bytes && bytes !== 0) return '—';
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+};
+
+const fileExt = (doc) => {
+  const name = doc.file_name || '';
+  const ext = name.includes('.') ? name.split('.').pop() : '';
+  return ext ? ext.toUpperCase() : 'FILE';
+};
+
+const documents = [
+  { id: 1, title: 'Brand Guidelines 2026', category: 'Brand Assets', file_name: 'brand-guidelines.pdf', file_size: 2400000, file_url: '#', file_path: '', created_at: '2026-10-20' },
+  { id: 2, title: 'Client Proposal Template', category: 'Proposals', file_name: 'proposal-template.docx', file_size: 184000, file_url: '#', file_path: '', created_at: '2026-10-12' },
+  { id: 3, title: 'Q3 Performance Report', category: 'Reports', file_name: 'q3-report.xlsx', file_size: 96000, file_url: '#', file_path: '', created_at: '2026-10-02' },
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Uploads - Uncore Digital Admin</title>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    /* Uncore Brand Colors - Light Theme */
+    :root {
+      --bg-main: #f9fafb;
+      --bg-surface: #ffffff;
+      --border-color: #e5e7eb;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --primary-brand: #caf301; /* Uncore Green */
+      --primary-hover: #b3d900;
+      --surface-hover: #f3f4f6;
+      --danger-red: #ef4444;
+      --sidebar-width: 260px;
+      --header-height: 64px; /* shared by sidebar brand + topbar so their bottom lines meet */
+      --gutter: 32px;        /* shared left/right spacing */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Layout */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-surface);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-brand {
+      height: var(--header-height);
+      flex-shrink: 0;
+      padding: 0 var(--gutter);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-brand img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .sidebar-brand .brand-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .sidebar-menu {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .menu-item:hover {
+      background-color: var(--surface-hover);
+      color: var(--text-main);
+    }
+
+    .menu-item.active {
+      background-color: var(--primary-brand);
+      color: #111111;
+      font-weight: 600;
+    }
+
+    .menu-item i {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Main Content Area */
+    .main-wrapper {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    /* Top Navigation */
+    .topbar {
+      height: var(--header-height);
+      flex-shrink: 0;
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 var(--gutter);
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      background-color: var(--text-main);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    /* Page Content */
+    .content {
+      padding: var(--gutter);
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .page-title h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .page-title p {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background-color: var(--text-main);
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-primary:hover {
+      background-color: #374151;
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background-color: #fff;
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--surface-hover);
+    }
+
+    /* Cards */
+    .card {
+      background-color: var(--bg-surface);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    .upload-card {
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+
+    .upload-card.d-none { display: none; }
+
+    /* Form */
+    .form-group { margin-bottom: 24px; }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 14px;
+      color: var(--text-main);
+      transition: border-color 0.2s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--text-main);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .hint {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* Drop zone */
+    .dropzone {
+      border: 2px dashed var(--border-color);
+      border-radius: 8px;
+      padding: 32px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background-color 0.2s;
+      background-color: #fcfcfc;
+    }
+
+    .dropzone:hover,
+    .dropzone.dragover {
+      border-color: var(--text-main);
+      background-color: var(--surface-hover);
+    }
+
+    .dropzone i {
+      font-size: 36px;
+      color: var(--text-main);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .dropzone .dz-title { font-size: 14px; font-weight: 600; }
+    .dropzone .dz-sub { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+    .dropzone .dz-file {
+      display: none;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 12px;
+      padding: 6px 12px;
+      background-color: var(--primary-brand);
+      color: #111;
+      border-radius: 6px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .dropzone.has-file .dz-file { display: block; }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .error-msg {
+      color: var(--danger-red);
+      font-size: 14px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    /* Search & Table Area */
+    .table-toolbar {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .search-box {
+      position: relative;
+      width: 300px;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 12px 10px 36px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 14px;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-box input:focus { border-color: var(--text-main); }
+    .search-box input::placeholder { color: var(--text-muted); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      padding: 16px 24px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      background-color: #fcfcfc;
+      border-bottom: 1px solid var(--border-color);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 16px 24px;
+      font-size: 14px;
+      color: var(--text-main);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background-color: var(--surface-hover); }
+
+    .doc-name {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+    }
+
+    .file-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background-color: var(--primary-brand);
+      color: #111;
+      flex-shrink: 0;
+    }
+
+    .muted { color: var(--text-muted); }
+
+    .action-icons {
+      display: flex;
+      gap: 16px;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      text-decoration: none;
+      color: var(--text-muted);
+    }
+
+    .icon-btn.view:hover,
+    .icon-btn.download:hover {
+      color: #2563eb;
+      transform: scale(1.1);
+    }
+
+    .icon-btn.delete:hover {
+      color: var(--danger-red);
+      transform: scale(1.1);
+    }
+
+    .empty-row td {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="/favicon-96x96.png" alt="Uncore Digital" onerror="this.style.display='none';">
+      <span class="brand-name">Admin Panel</span>
+    </div>
+
+    <nav class="sidebar-menu">
+      <a href="/admin/overview" class="menu-item active"><i class="ph ph-squares-four"></i> Dashboard</a>
+      <a href="/admin/leads" class="menu-item"><i class="ph ph-envelope-simple"></i> Leads</a>
+      <!-- <a href="/admin/document-uploads" class="menu-item"><i class="ph ph-upload-simple"></i> Document Uploads</a> -->
+      <!-- <a href="#" class="menu-item"><i class="ph ph-clipboard-text"></i> Questionnaires</a> -->
+      <a href="/admin/blogs" class="menu-item"><i class="ph ph-article"></i> Blogs</a>
+      <!-- <a href="#" class="menu-item"><i class="ph ph-copy"></i> Articles &amp; Podcasts</a> -->
+      <!-- <a href="#" class="menu-item"><i class="ph ph-calendar-blank"></i> Events</a> -->
+    </nav>
+  </aside>
+
+  <!-- Main Wrapper -->
+  <div class="main-wrapper">
+
+    <!-- Top Navigation -->
+    <header class="topbar">
+      <div class="user-profile">
+        <span>Admin User</span>
+        <div class="user-avatar">A</div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="content">
+
+      <!-- Header Area -->
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Document Uploads</h1>
+          <p>Upload, view, and manage your documents</p>
+        </div>
+        <button type="button" class="btn-primary" id="toggle-upload">
+          <i class="ph ph-plus"></i> Upload Document
+        </button>
+      </div>
+
+      <!-- Upload Card -->
+      <form id="upload-form" class="card upload-card d-none">
+        <div class="form-group">
+          <label class="form-label">File</label>
+          <div class="dropzone" id="dropzone">
+            <i class="ph ph-cloud-arrow-up"></i>
+            <div class="dz-title">Click to choose a file or drag it here</div>
+            <div class="dz-sub">PDF, Word, Excel, PowerPoint, images or ZIP. Max 10 MB.</div>
+            <div class="dz-file" id="dz-file"></div>
+            <input type="file" id="file" hidden accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg,.webp,.zip,.txt,.csv" />
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Document title</label>
+            <input type="text" id="title" class="form-control" placeholder="e.g. Brand guidelines 2026" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select id="category" class="form-control">
+              <option value="General">General</option>
+              <option value="Contracts">Contracts</option>
+              <option value="Proposals">Proposals</option>
+              <option value="Invoices">Invoices</option>
+              <option value="Brand Assets">Brand Assets</option>
+              <option value="Reports">Reports</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Notes (optional)</label>
+          <textarea id="notes" class="form-control" rows="2"></textarea>
+        </div>
+
+        <div class="btn-group">
+          <button type="submit" class="btn-primary" id="submit-btn">Upload document</button>
+          <button type="button" class="btn-secondary" id="cancel-upload">Cancel</button>
+        </div>
+        <p class="error-msg" id="error-msg"></p>
+      </form>
+
+      <!-- Table Card -->
+      <div class="card">
+
+        <!-- Toolbar / Search -->
+        <div class="table-toolbar">
+          <div class="search-box">
+            <i class="ph ph-magnifying-glass"></i>
+            <input type="text" id="search" placeholder="Search documents...">
+          </div>
+        </div>
+
+        <!-- Table Data -->
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 60px;">#</th>
+              <th>Document</th>
+              <th>Category</th>
+              <th>Size</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="doc-rows">
+            {documents && documents.map((doc, index) => (
+              <tr class="doc-row" data-search={`${doc.title || ''} ${doc.file_name || ''} ${doc.category || ''}`.toLowerCase()}>
+                <td class="muted" style="font-weight: 500;">{index + 1}</td>
+                <td>
+                  <div class="doc-name">
+                    <span class="file-badge">{fileExt(doc)}</span>
+                    <span>{doc.title || doc.file_name}</span>
+                  </div>
+                </td>
+                <td class="muted">{doc.category || 'General'}</td>
+                <td class="muted">{formatSize(doc.file_size)}</td>
+                <td class="muted">{formatDate(doc)}</td>
+                <td>
+                  <div class="action-icons">
+                    <a href={doc.file_url} target="_blank" rel="noopener" class="icon-btn view" title="View">
+                      <i class="ph ph-eye"></i>
+                    </a>
+                    <a href={doc.file_url} download={doc.file_name} class="icon-btn download" title="Download">
+                      <i class="ph ph-download-simple"></i>
+                    </a>
+                    <button class="icon-btn delete delete-btn" data-id={doc.id} data-path={doc.file_path} title="Delete">
+                      <i class="ph ph-trash" style="pointer-events: none;"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+
+            {(!documents || documents.length === 0) && (
+              <tr class="empty-row">
+                <td colspan="6">No documents uploaded yet.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Security & Logic Script -->
+  <script>
+    // Static preview: no database or storage.
+    const form = document.getElementById('upload-form') as HTMLFormElement;
+    const dropzone = document.getElementById('dropzone') as HTMLDivElement;
+    const fileInput = document.getElementById('file') as HTMLInputElement;
+    const fileLabel = document.getElementById('dz-file') as HTMLDivElement;
+    const titleInput = document.getElementById('title') as HTMLInputElement;
+    const errorMsg = document.getElementById('error-msg') as HTMLParagraphElement;
+
+    function resetForm() {
+      form.reset();
+      dropzone.classList.remove('has-file', 'dragover');
+      fileLabel.textContent = '';
+      errorMsg.style.display = 'none';
+    }
+
+    document.getElementById('toggle-upload')?.addEventListener('click', () => {
+      form.classList.toggle('d-none');
+      if (!form.classList.contains('d-none')) form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+    document.getElementById('cancel-upload')?.addEventListener('click', () => {
+      resetForm();
+      form.classList.add('d-none');
+    });
+
+    function setFile(file: File | undefined) {
+      if (!file) return;
+      fileLabel.textContent = file.name;
+      dropzone.classList.add('has-file');
+      if (!titleInput.value) titleInput.value = file.name.replace(/\.[^.]+$/, '');
+    }
+    dropzone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('click', (e) => e.stopPropagation());
+    fileInput.addEventListener('change', () => setFile(fileInput.files?.[0]));
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      const file = e.dataTransfer?.files?.[0];
+      if (file) {
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        fileInput.files = dt.files;
+        setFile(file);
+      }
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Preview only: uploads are not connected to storage yet.');
+    });
+
+    (document.getElementById('search') as HTMLInputElement).addEventListener('input', (e) => {
+      const q = (e.target as HTMLInputElement).value.trim().toLowerCase();
+      document.querySelectorAll<HTMLElement>('.doc-row').forEach((row) => {
+        row.style.display = !q || (row.dataset.search || '').includes(q) ? '' : 'none';
+      });
+    });
+
+    document.querySelectorAll('.delete-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        if (confirm('Are you sure you want to delete this document?')) button.closest('tr')?.remove();
+      });
+    });
+  </script>
+
+</body>
+</html>

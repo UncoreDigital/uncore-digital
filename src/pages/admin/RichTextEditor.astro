@@ -1,0 +1,146 @@
+---
+interface Props {
+  name?: string;
+  initialContent?: string;
+}
+
+const { name = "body", initialContent = "" } = Astro.props;
+---
+
+<div class="rich-editor" data-rich-editor>
+  <div class="editor-toolbar" role="toolbar" aria-label="Article formatting">
+    <button type="button" data-command="h2" title="Heading 2">H2</button>
+    <button type="button" data-command="h3" title="Heading 3">H3</button>
+    <button type="button" data-command="clear" title="Clear Formatting"><b>Tx</b></button>
+    <span class="toolbar-divider"></span>
+    <button type="button" data-command="bold" title="Bold"><b>B</b></button>
+    <button type="button" data-command="italic" title="Italic"><i>I</i></button>
+    <button type="button" data-command="underline" title="Underline"><u>U</u></button>
+    <span class="toolbar-divider"></span>
+    <button type="button" data-command="bullet" title="Bullet list">• List</button>
+    <button type="button" data-command="ordered" title="Numbered list">1. List</button>
+    <button type="button" data-command="blockquote" title="Quote">❝</button>
+    <span class="toolbar-divider"></span>
+    <button type="button" data-command="link" title="Insert link">Link</button>
+    <button type="button" data-command="unlink" title="Remove link">Unlink</button>
+    <button type="button" data-command="undo" title="Undo">↶</button>
+    <button type="button" data-command="redo" title="Redo">↷</button>
+  </div>
+
+  <div class="editor-area" data-editor-content></div>
+  <textarea id={name === "body" ? "body" : undefined} name={name} data-editor-output hidden>{initialContent}</textarea>
+</div>
+
+<style>
+  .rich-editor { width: 100%; border: 1px solid #e5e7eb; border-radius: 6px; background: #fff; overflow: hidden; }
+  .editor-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; padding: 10px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; }
+  .editor-toolbar button { min-width: 34px; height: 32px; padding: 4px 9px; border: 1px solid transparent; border-radius: 4px; background: transparent; color: #252525; cursor: pointer; font-size: 13px; font-family: -apple-system, sans-serif; font-weight: 500; transition: background 0.2s; }
+  .editor-toolbar button:hover { background: #e5e7eb; }
+  .editor-toolbar button.is-active { background: #efffa8; border-color: #c8df00; color: #111; }
+  .toolbar-divider { width: 1px; height: 23px; background: #d1d5db; margin: 0 4px; }
+  
+  .editor-area { min-height: 400px; padding: 20px; cursor: text; }
+  
+  .editor-area :global(.tiptap) { outline: none; min-height: 360px; color: #111; font-family: "Outfit", sans-serif; font-size: 16px; line-height: 1.6; }
+  .editor-area :global(.tiptap p) { margin: 0 0 16px; }
+  .editor-area :global(.tiptap h2) { font-size: 24px; line-height: 1.3; font-weight: 700; margin: 32px 0 12px; }
+  .editor-area :global(.tiptap h3) { font-size: 20px; line-height: 1.3; font-weight: 700; margin: 24px 0 10px; }
+  .editor-area :global(.tiptap ul), .editor-area :global(.tiptap ol) { padding-left: 24px; margin: 0 0 16px; }
+  .editor-area :global(.tiptap li) { margin-bottom: 6px; }
+  .editor-area :global(.tiptap blockquote) { border-left: 4px solid #caf301; padding-left: 16px; margin: 16px 0; color: #555; font-style: italic; background: #f9fafb; padding-top: 8px; padding-bottom: 8px; }
+  .editor-area :global(.tiptap a) { color: #2563eb; text-decoration: underline; cursor: pointer; }
+</style>
+
+<script>
+  import { Editor } from "@tiptap/core";
+  import StarterKit from "@tiptap/starter-kit";
+  import Link from "@tiptap/extension-link";
+  import Underline from "@tiptap/extension-underline";
+
+  document.querySelectorAll<HTMLElement>("[data-rich-editor]").forEach((root) => {
+    if (root.dataset.initialized === "true") return;
+    root.dataset.initialized = "true";
+
+    const editorElement = root.querySelector<HTMLElement>("[data-editor-content]");
+    const output = root.querySelector<HTMLTextAreaElement>("[data-editor-output]");
+    if (!editorElement || !output) return;
+
+    const editor = new Editor({
+      element: editorElement,
+      extensions: [
+        StarterKit.configure({
+          heading: { levels: [2, 3] }
+        }),
+        Underline,
+        Link.configure({
+          openOnClick: false,
+          autolink: true,
+          linkOnPaste: true,
+          HTMLAttributes: { target: "_blank", rel: "noopener noreferrer" }
+        })
+      ],
+      content: output.value || "<p></p>",
+      onUpdate: ({ editor }) => {
+        output.value = editor.getHTML();
+        output.dispatchEvent(new Event("input", { bubbles: true }));
+      }
+    });
+
+    // FIX: Listen for incoming data from the edit-post page so it loads safely
+    window.addEventListener('set-editor-content', (e: any) => {
+      editor.commands.setContent(e.detail);
+    });
+
+    root.querySelectorAll<HTMLButtonElement>("[data-command]").forEach((button) => {
+      button.addEventListener("mousedown", (event) => event.preventDefault()); 
+      button.addEventListener("click", () => {
+        const command = button.dataset.command;
+        const chain = editor.chain().focus();
+
+        switch (command) {
+          case "bold": chain.toggleBold().run(); break;
+          case "italic": chain.toggleItalic().run(); break;
+          case "underline": chain.toggleUnderline().run(); break;
+          case "h2": chain.toggleHeading({ level: 2 }).run(); break;
+          case "h3": chain.toggleHeading({ level: 3 }).run(); break;
+          case "bullet": chain.toggleBulletList().run(); break;
+          case "ordered": chain.toggleOrderedList().run(); break;
+          case "blockquote": chain.toggleBlockquote().run(); break;
+          case "undo": chain.undo().run(); break;
+          case "redo": chain.redo().run(); break;
+          case "clear": chain.clearNodes().unsetAllMarks().run(); break;
+          case "unlink": chain.unsetLink().run(); break;
+          case "link": {
+            const previousUrl = editor.getAttributes('link').href || '';
+            const url = window.prompt("Enter the link URL:", previousUrl);
+            if (url === null) break; 
+            if (url === '') {
+              chain.unsetLink().run();
+            } else {
+              chain.setLink({ href: url }).run();
+            }
+            break;
+          }
+        }
+      });
+    });
+
+    editor.on("transaction", () => {
+      root.querySelectorAll<HTMLButtonElement>("[data-command]").forEach((button) => {
+        const command = button.dataset.command;
+        const isActive =
+          (command === "bold" && editor.isActive("bold")) ||
+          (command === "italic" && editor.isActive("italic")) ||
+          (command === "underline" && editor.isActive("underline")) ||
+          (command === "h2" && editor.isActive("heading", { level: 2 })) ||
+          (command === "h3" && editor.isActive("heading", { level: 3 })) ||
+          (command === "bullet" && editor.isActive("bulletList")) ||
+          (command === "ordered" && editor.isActive("orderedList")) ||
+          (command === "blockquote" && editor.isActive("blockquote")) ||
+          (command === "link" && editor.isActive("link"));
+        
+        button.classList.toggle("is-active", Boolean(isActive));
+      });
+    });
+  });
+</script>

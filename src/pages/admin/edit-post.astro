@@ -1,0 +1,410 @@
+---
+import { supabase } from '../../lib/supabase.js';
+import RichTextEditor from './RichTextEditor.astro';
+import AdminSidebar from './AdminSidebar.astro';
+import AdminTopbar from './AdminTopbar.astro';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Edit Article - Uncore Digital Admin</title>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    :root {
+      --bg-main: #f9fafb;
+      --bg-surface: #ffffff;
+      --border-color: #e5e7eb;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --primary-brand: #caf301;
+      --primary-hover: #b3d900;
+      --surface-hover: #f3f4f6;
+      --danger-red: #ef4444;
+      --sidebar-width: 260px;
+      --header-height: 64px; 
+      --gutter: 32px;        
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg-main); color: var(--text-main); display: flex; min-height: 100vh; }
+
+    .main-wrapper { flex: 1; margin-left: var(--sidebar-width); display: flex; flex-direction: column; min-width: 0; }
+    .content { padding: var(--gutter); max-width: 900px; width: 100%; margin: 0 auto; }
+    .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+    .page-title h1 { font-size: 24px; font-weight: 700; color: var(--text-main); }
+
+    .form-card { background-color: var(--bg-surface); border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 32px; }
+    .form-group { margin-bottom: 24px; }
+    .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .form-control { width: 100%; padding: 12px 14px; background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 6px; font-size: 14px; color: var(--text-main); transition: border-color 0.2s; }
+    .form-control:focus { outline: none; border-color: var(--text-main); }
+    textarea.form-control { resize: vertical; min-height: 100px; }
+    .form-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .form-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .checkbox-group { display: flex; align-items: center; gap: 8px; align-self: end; min-height: 44px; margin-bottom: 24px; }
+
+    .btn-group { display: flex; gap: 12px; margin-top: 32px; }
+    .btn-primary { background-color: var(--text-main); color: #fff; border: none; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+    .btn-primary:hover { background-color: #374151; }
+    .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+    .btn-secondary { background-color: #fff; color: var(--text-main); border: 1px solid var(--border-color); padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; transition: background-color 0.2s; }
+    .btn-secondary:hover { background-color: var(--surface-hover); }
+
+    .d-none { display: none !important; }
+    .text-danger { color: var(--danger-red); margin-top: 12px; font-size: 14px; }
+    .text-muted { color: var(--text-muted); font-size: 13px; margin-top: 4px; display: block; }
+    .loading-state { text-align: center; padding: 60px 0; color: var(--text-muted); font-weight: 500; }
+
+    .image-preview-wrapper { position: relative; display: inline-block; }
+    .zoom-btn { position: absolute; bottom: 8px; right: 8px; background: rgba(17, 24, 39, 0.7); color: #fff; border: none; border-radius: 4px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; font-size: 16px; }
+    .zoom-btn:hover { background: rgba(17, 24, 39, 0.9); }
+    
+    .zoom-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+    .zoom-modal img { max-width: 90%; max-height: 90vh; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); object-fit: contain; }
+    .close-zoom-btn { position: absolute; top: 24px; right: 24px; background: none; border: none; color: #fff; font-size: 32px; cursor: pointer; transition: color 0.2s; }
+    .close-zoom-btn:hover { color: var(--primary-brand); }
+  </style>
+</head>
+<body>
+  <AdminSidebar />
+
+  <div class="main-wrapper">
+    <AdminTopbar />
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Edit Article</h1>
+        </div>
+        <a href="/admin/blogs" class="btn-secondary">Cancel & Return</a>
+      </div>
+
+      <div id="loading" class="loading-state">
+        Loading article data...
+      </div>
+
+      <form id="edit-form" class="form-card d-none">
+        <input type="hidden" id="blog-id" />
+
+        <div class="form-group">
+          <label class="form-label">Title <span style="color:red">*</span></label>
+          <input type="text" id="title" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Slug (From title if blank)</label>
+          <input type="text" id="slug" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Excerpt</label>
+          <textarea id="excerpt" class="form-control" rows="2"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Body Content</label>
+          <RichTextEditor id="body" name="body" />
+          <span class="text-muted">Use the toolbar to format your article. Press <b>Tx</b> to clear pasted styling.</span>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select id="category" class="form-control">
+              <option value="Marketing">Marketing</option>
+              <option value="Design">Design</option>
+              <option value="Development">Development</option>
+              <option value="Business">Business</option>
+              <option value="Technology">Technology</option>
+              <option value="Branding">Branding</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Author</label>
+            <input type="text" id="author" class="form-control" placeholder="Uncore Digital" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Author role (optional)</label>
+            <input type="text" id="author_role" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Tags (comma separated)</label>
+          <input type="text" id="tags" class="form-control" placeholder="storytelling, branding, digital-marketing" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Cover image</label>
+          <input type="file" id="cover_image" class="form-control" accept="image/*" />
+          <span class="text-muted">Upload a new image to replace the current one, or leave blank to keep it.</span>
+
+          <div style="display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap;">
+            
+            <div id="current-image-container" class="d-none">
+              <label class="form-label">Current Image:</label>
+              <div class="image-preview-wrapper">
+                <img id="current-image-preview" src="" alt="Current cover image" style="max-height: 150px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color);" />
+                <button type="button" id="zoom-current-btn" class="zoom-btn" title="Zoom Image">
+                  <i class="ph ph-arrows-out"></i>
+                </button>
+              </div>
+            </div>
+
+            <div id="new-image-container" class="d-none">
+              <label class="form-label" style="color: #65a30d;">New Image Preview:</label>
+              <div class="image-preview-wrapper">
+                <img id="new-image-preview" src="" alt="New cover image preview" style="max-height: 150px; object-fit: cover; border-radius: 6px; border: 2px solid #84cc16;" />
+                <button type="button" id="zoom-new-btn" class="zoom-btn" title="Zoom Image">
+                  <i class="ph ph-arrows-out"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <h3 class="form-label" style="margin-top: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Search Engine Listing</h3>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">SEO title</label>
+            <input type="text" id="seo_title" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">SEO description</label>
+            <input type="text" id="seo_description" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-grid-2" style="align-items: start;">
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select id="status" class="form-control">
+              <option value="Draft">Draft — not on the website</option>
+              <option value="Published">Published</option>
+            </select>
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="is_featured" />
+            <label for="is_featured" style="font-size: 14px; cursor: pointer;">Feature on the resources page</label>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button type="submit" class="btn-primary" id="submit-btn">Update article</button>
+          <a href="/admin/blogs" class="btn-secondary">Cancel</a>
+        </div>
+        <p id="error-msg" class="text-danger d-none"></p>
+      </form>
+    </main>
+  </div>
+
+  <div id="zoom-modal" class="zoom-modal d-none">
+    <button type="button" id="close-zoom-btn" class="close-zoom-btn" title="Close"><i class="ph ph-x"></i></button>
+    <img id="zoom-modal-img" src="" alt="Zoomed Cover" />
+  </div>
+
+  <script>
+    import { supabase } from '../../lib/supabase.js';
+
+    // 1. Protect route
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) window.location.href = '/admin/login';
+
+    // 2. Get ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const blogId = urlParams.get('id');
+    if (!blogId) window.location.href = '/admin/blogs';
+
+    let existingImageUrl = '';
+
+    // 3. Fetch data and populate form
+    async function loadBlogData() {
+      const { data: blog, error } = await supabase.from('Blogs').select('*').eq('id', blogId).single();
+
+      if (error || !blog) {
+        alert('Error loading post data.');
+        window.location.href = '/admin/blogs';
+        return;
+      }
+
+      document.getElementById('loading').classList.add('d-none');
+      document.getElementById('edit-form').classList.remove('d-none');
+
+      document.getElementById('blog-id').value = blog.id;
+      document.getElementById('title').value = blog.title || '';
+      document.getElementById('slug').value = blog.slug || '';
+      document.getElementById('excerpt').value = blog.excerpt || '';
+      
+      const bodyInput = document.querySelector('[name="body"]');
+      if (bodyInput) {
+        bodyInput.value = blog.body || '';
+      }
+      
+      // FIX: Safely tell Tiptap to load the text (this prevents freezing!)
+      window.dispatchEvent(new CustomEvent('set-editor-content', { detail: blog.body || '' }));
+
+      const categorySelect = document.getElementById('category');
+      if (blog.category && ![...categorySelect.options].some(opt => opt.value === blog.category)) {
+        categorySelect.add(new Option(blog.category, blog.category));
+      }
+      categorySelect.value = blog.category || 'Marketing';
+
+      document.getElementById('author').value = blog.author || '';
+      document.getElementById('author_role').value = blog.author_role || '';
+      document.getElementById('tags').value = blog.tags || '';
+      document.getElementById('seo_title').value = blog.seo_title || '';
+      document.getElementById('seo_description').value = blog.seo_description || '';
+      document.getElementById('status').value = blog.status || 'Draft';
+      document.getElementById('is_featured').checked = blog.is_featured || false;
+
+      existingImageUrl = blog.cover_image_url || '';
+      if (existingImageUrl) {
+        document.getElementById('current-image-preview').src = existingImageUrl;
+        document.getElementById('current-image-container').classList.remove('d-none');
+      }
+    }
+
+    loadBlogData();
+
+    // Image Preview Logic
+    const coverImageInput = document.getElementById('cover_image');
+    const newImageContainer = document.getElementById('new-image-container');
+    const newImagePreview = document.getElementById('new-image-preview');
+
+    coverImageInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        newImagePreview.src = URL.createObjectURL(file);
+        newImageContainer.classList.remove('d-none');
+      } else {
+        newImagePreview.src = '';
+        newImageContainer.classList.add('d-none');
+      }
+    });
+
+    // Zoom Modal Logic
+    const zoomModal = document.getElementById('zoom-modal');
+    const zoomModalImg = document.getElementById('zoom-modal-img');
+    const closeZoomBtn = document.getElementById('close-zoom-btn');
+
+    document.getElementById('zoom-current-btn').addEventListener('click', () => {
+      zoomModalImg.src = document.getElementById('current-image-preview').src;
+      zoomModal.classList.remove('d-none');
+    });
+
+    document.getElementById('zoom-new-btn').addEventListener('click', () => {
+      zoomModalImg.src = newImagePreview.src;
+      zoomModal.classList.remove('d-none');
+    });
+
+    closeZoomBtn.addEventListener('click', () => {
+      zoomModal.classList.add('d-none');
+    });
+
+    zoomModal.addEventListener('click', (e) => {
+      if (e.target === zoomModal) {
+        zoomModal.classList.add('d-none');
+      }
+    });
+    
+    function makeSlug(value) {
+      return value.toLowerCase().trim().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+
+    // 4. Handle Submission
+    document.getElementById('edit-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      const errorMsg = document.getElementById('error-msg');
+      const statusInput = document.getElementById('status');
+
+      // Extract formatted HTML from the RichTextEditor's hidden output
+      const bodyInput = document.querySelector('[name="body"]');
+      const htmlBody = bodyInput ? bodyInput.value.trim() : '';
+      const plainBody = htmlBody.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+      
+      const status = statusInput.value;
+      const file = coverImageInput.files.length > 0 ? coverImageInput.files[0] : null;
+
+      if (status === 'Published') {
+        if (!plainBody) {
+          alert('Please write the article content before publishing.');
+          document.querySelector('[data-editor-content]')?.focus();
+          return;
+        }
+        if (!file && !existingImageUrl) {
+          alert('Please select or keep a cover image before publishing.');
+          return;
+        }
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Updating...';
+      errorMsg.classList.add('d-none');
+
+      let finalImageUrl = existingImageUrl;
+
+      if (file) {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Date.now()}-${crypto.randomUUID()}.${fileExt}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('blog-images')
+          .upload(fileName, file);
+
+        if (uploadError) {
+          errorMsg.textContent = "Image upload failed: " + uploadError.message;
+          errorMsg.classList.remove('d-none');
+          btn.disabled = false;
+          btn.textContent = 'Update article';
+          return;
+        }
+
+        const { data: publicUrlData } = supabase.storage
+          .from('blog-images')
+          .getPublicUrl(fileName);
+
+        finalImageUrl = publicUrlData.publicUrl;
+      }
+
+      const titleVal = document.getElementById('title').value.trim();
+      let slugVal = document.getElementById('slug').value.trim();
+      if (!slugVal) slugVal = makeSlug(titleVal);
+
+      const updatedData = {
+        title: titleVal,
+        slug: slugVal,
+        excerpt: document.getElementById('excerpt').value.trim() || null,
+        body: htmlBody || null,
+        category: document.getElementById('category').value,
+        author: document.getElementById('author').value.trim() || 'Uncore Digital',
+        author_role: document.getElementById('author_role').value.trim() || null,
+        tags: document.getElementById('tags').value.trim() || null,
+        cover_image_url: finalImageUrl,
+        seo_title: document.getElementById('seo_title').value.trim() || null,
+        seo_description: document.getElementById('seo_description').value.trim() || null,
+        status: status,
+        is_featured: document.getElementById('is_featured').checked
+      };
+
+      const { error } = await supabase.from('Blogs').update(updatedData).eq('id', blogId);
+
+      if (error) {
+        errorMsg.textContent = "Error updating post: " + error.message;
+        errorMsg.classList.remove('d-none');
+        btn.disabled = false;
+        btn.textContent = 'Update article';
+      } else {
+        alert(`Article successfully updated as ${status}!`);
+        window.location.href = '/admin/blogs';
+      }
+    });
+  </script>
+</body>
+</html>

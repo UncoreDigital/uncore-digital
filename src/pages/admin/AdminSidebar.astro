@@ -1,0 +1,135 @@
+---
+// Highlights the link that matches the current URL, so pages never set "active" by hand
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+
+const links = [
+  { href: "/admin/overview", label: "Dashboard", icon: "ph-squares-four", exact: true },
+  { href: "/admin/leads", label: "Leads", icon: "ph-envelope-simple" },
+  {
+    href: "/admin/blogs",
+    label: "Blogs",
+    icon: "ph-article",
+    also: ["/admin/edit-post", "/admin/create-post"],
+  },
+];
+
+const isActive = (link) =>
+  link.exact
+    ? path === link.href
+    : [link.href, ...(link.also ?? [])].some(
+        (p) => path === p || path.startsWith(p + "/")
+      );
+---
+
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <img
+      src="/favicon-96x96.png"
+      alt="Uncore Digital"
+      onerror="this.style.display='none';"
+    />
+    <span class="brand-name">Admin Panel</span>
+  </div>
+
+  <nav class="sidebar-menu">
+    {
+      links.map((link) => (
+        <a
+          href={link.href}
+          class:list={["menu-item", { active: isActive(link) }]}
+          aria-current={isActive(link) ? "page" : undefined}
+        >
+          <i class={`ph ${link.icon}`} />
+          {link.label}
+        </a>
+      ))
+    }
+  </nav>
+</aside>
+
+<style>
+  .sidebar {
+    width: var(--sidebar-width, 260px);
+    background-color: var(--bg-surface, #fff);
+    border-right: 1px solid var(--border-color, #e5e7eb);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .sidebar-brand {
+    height: var(--header-height, 64px);
+    flex-shrink: 0;
+    padding: 0 var(--gutter, 32px);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border-color, #e5e7eb);
+  }
+
+  .sidebar-brand img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .brand-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-main, #111827);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .sidebar-menu {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: var(--text-muted, #6b7280);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+
+  /* Hover only changes inactive items, so the green active item never turns grey */
+  .menu-item:hover:not(.active) {
+    background-color: var(--surface-hover, #f3f4f6);
+    color: var(--text-main, #111827);
+  }
+
+  .menu-item.active {
+    background-color: var(--primary-brand, #caf301);
+    color: #111;
+    font-weight: 600;
+  }
+
+  .menu-item:focus-visible {
+    outline: 2px solid var(--text-main, #111827);
+    outline-offset: 2px;
+  }
+
+  .menu-item i {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

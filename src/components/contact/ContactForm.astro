@@ -189,15 +189,14 @@
 </div>
 
 <script>
+  import { supabase } from '../../lib/supabase.js';
+
   document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("contactForm") as HTMLFormElement;
-    const submitBtn = document.getElementById(
-      "submitButton",
-    ) as HTMLButtonElement;
+    const submitBtn = document.getElementById("submitButton") as HTMLButtonElement;
 
     // Helper to create and show a toast
     const showToast = (message: string, isError = false) => {
-      // Create toast element
       const toast = document.createElement("div");
       toast.textContent = message;
       toast.style.position = "fixed";
@@ -207,9 +206,7 @@
       toast.style.padding = "12px 24px";
       toast.style.borderRadius = "8px";
       toast.style.color = "#fff";
-      toast.style.backgroundColor = isError
-        ? "#e74c3c"
-        : "var(--tz-primary-color, #1a365d)";
+      toast.style.backgroundColor = isError ? "#e74c3c" : "var(--tz-primary-color, #1a365d)";
       toast.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
       toast.style.fontWeight = "600";
       toast.style.fontFamily = "'Poppins', sans-serif";
@@ -219,12 +216,7 @@
 
       document.body.appendChild(toast);
 
-      // Animate in
-      setTimeout(() => {
-        toast.style.opacity = "1";
-      }, 10);
-
-      // Remove after 3.5 seconds
+      setTimeout(() => { toast.style.opacity = "1"; }, 10);
       setTimeout(() => {
         toast.style.opacity = "0";
         setTimeout(() => toast.remove(), 300);
@@ -233,7 +225,6 @@
 
     if (form) {
       form.addEventListener("submit", async (e) => {
-        // Prevent default submission to validate and send to Apps Script first
         e.preventDefault();
 
         // Capture form fields
@@ -244,13 +235,13 @@
         const subject = formData.get("subject")?.toString().trim() || "";
         const message = formData.get("message")?.toString().trim() || "";
 
-        // Validation: Verify essential fields before building HTML string
+        // Validation
         if (!name || !email || !message) {
           showToast("Please fill in all required fields.", true);
           return;
         }
 
-        // Disable button immediately to prevent double submissions
+        // Disable button immediately
         if (submitBtn) {
           submitBtn.disabled = true;
           submitBtn.textContent = "Sending...";
@@ -260,13 +251,12 @@
 
         const source = "Uncore Digital";
 
-        // HTML Generation: Create a template literal string named htmlBody
+        // HTML Generation for Email
         const htmlBody = `
           <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 20px auto; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); background-color: #ffffff; border: 1px solid #eaeaea;">
             <div style="text-align: center; margin-bottom: 25px;">
               <h2 style="color: #1a365d; margin: 0; font-size: 24px; padding-bottom: 15px; border-bottom: 2px solid #e2e8f0;">New Contact Submission</h2>
             </div>
-            
             <table style="width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
               <tr>
                 <td style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; font-weight: 600; color: #4a5568; background-color: #f7fafc; width: 35%;">Source</td>
@@ -295,40 +285,42 @@
                 <td style="padding: 12px 15px; color: #2d3748; background-color: #ffffff; line-height: 1.5; white-space: pre-wrap;">${message}</td>
               </tr>
             </table>
-            
             <div style="margin-top: 20px; font-size: 12px; color: #a0aec0; text-align: center;">
               This email was generated automatically from the ${source} website contact form.
             </div>
           </div>
         `;
 
-        // Payload for Google Apps Script
-        const payload = {
-          source: source,
-          htmlBody: htmlBody,
-        };
-
         try {
-          // Replace 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' with your actual endpoint URL
-          const appsScriptUrl =
-            "https://script.google.com/macros/s/AKfycbzB9_gPPiXv_kz2_zklYxuQccyxL76FGxCg3ASBa_te3KvyBLZsgusRsCCVRSfWIMJ__g/exec";
+          // 1. SAVE TO SUPABASE FIRST
+          const { error: dbError } = await supabase.from('Leads').insert([{
+            name: name,
+            email: email,
+            number: number,
+            subject: subject,
+            message: message,
+            source: 'Website',
+            status: 'New'
+          }]);
 
+          if (dbError) throw dbError;
+
+          // 2. SEND EMAIL VIA GOOGLE APPS SCRIPT
+          const payload = { source: source, htmlBody: htmlBody };
+          const appsScriptUrl = "https://script.google.com/macros/s/AKfycbzB9_gPPiXv_kz2_zklYxuQccyxL76FGxCg3ASBa_te3KvyBLZsgusRsCCVRSfWIMJ__g/exec";
+          
           await fetch(appsScriptUrl, {
             method: "POST",
             body: JSON.stringify(payload),
           });
 
+          // SUCCESS
           form.reset();
           showToast("Thank you! Your message has been sent successfully.");
+          
         } catch (error) {
-          console.error(
-            "Error sending form data to Google Apps Script:",
-            error,
-          );
-          showToast(
-            "There was an error submitting your form. Please try again.",
-            true,
-          );
+          console.error("Error submitting form:", error);
+          showToast("There was an error submitting your form. Please try again.", true);
         } finally {
           // Re-enable button
           if (submitBtn) {

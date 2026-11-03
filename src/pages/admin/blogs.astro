@@ -1,0 +1,225 @@
+---
+import { supabase } from '../../lib/supabase.js';
+import AdminSidebar from './AdminSidebar.astro';
+import AdminTopbar from './AdminTopbar.astro';
+
+// Fetch data
+const { data: blogs, error } = await supabase
+  .from('Blogs')
+  .select('*')
+  .order('created_at', { ascending: false });
+
+if (error) console.error("Database Error:", error);
+
+// Format date
+const formatDate = (blog) => {
+  const raw = blog.created_at || blog.date || blog.Date;
+  return raw ? new Date(raw).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A';
+};
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Blogs - Uncore Digital Admin</title>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    /* Uncore Brand Colors - Light Theme */
+    :root {
+      --bg-main: #f9fafb;
+      --bg-surface: #ffffff;
+      --border-color: #e5e7eb;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --primary-brand: #caf301;
+      --primary-hover: #b3d900;
+      --surface-hover: #f3f4f6;
+      --danger-red: #ef4444;
+      --sidebar-width: 260px;
+      --header-height: 64px;
+      --gutter: 32px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Layout */
+    .sidebar { width: var(--sidebar-width); background-color: var(--bg-surface); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; position: fixed; height: 100vh; overflow-y: auto; }
+    .sidebar-brand { height: var(--header-height); flex-shrink: 0; padding: 0 var(--gutter); display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-color); }
+    .sidebar-brand img { width: 32px; height: 32px; object-fit: contain; display: block; flex-shrink: 0; }
+    .sidebar-brand .brand-name { font-size: 18px; font-weight: 700; color: var(--text-main); letter-spacing: -0.02em; line-height: 1; }
+    .sidebar-menu { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .menu-item { display: flex; align-items: center; gap: 12px; padding: 10px 16px; text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; border-radius: 8px; transition: all 0.2s; }
+    .menu-item:hover { background-color: var(--surface-hover); color: var(--text-main); }
+    .menu-item.active { background-color: var(--primary-brand); color: #111111; font-weight: 600; }
+    .menu-item i { font-size: 20px; width: 20px; height: 20px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+    
+    .main-wrapper { flex: 1; margin-left: var(--sidebar-width); display: flex; flex-direction: column; min-width: 0; }
+    
+    /* Page Content */
+    .content { padding: var(--gutter); }
+    .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+    .page-title h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; color: var(--text-main); }
+    .page-title p { color: var(--text-muted); font-size: 14px; }
+
+    .btn-primary { background-color: var(--text-main); color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer; transition: background-color 0.2s; }
+    .btn-primary:hover { background-color: #374151; }
+
+    /* Search & Table Area */
+    .table-container { background-color: var(--bg-surface); border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 1px 3px rgba(0,0,0,0.05); overflow: hidden; }
+    .table-toolbar { padding: 20px 24px; border-bottom: 1px solid var(--border-color); }
+    .search-box { position: relative; width: 300px; }
+    .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+    .search-box input { width: 100%; padding: 10px 12px 10px 36px; background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 6px; font-size: 14px; color: var(--text-main); outline: none; transition: border-color 0.2s; }
+    .search-box input:focus { border-color: var(--text-main); }
+    .search-box input::placeholder { color: var(--text-muted); }
+
+    /* Table Styles */
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th { padding: 16px 24px; font-size: 13px; font-weight: 700; color: var(--text-main); background-color: #fcfcfc; border-bottom: 1px solid var(--border-color); text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 16px 24px; font-size: 14px; color: var(--text-main); border-bottom: 1px solid var(--border-color); }
+    tr:last-child td { border-bottom: none; }
+    tbody tr.data-row:hover td { background-color: var(--surface-hover); }
+
+    /* Badges for Draft/Published */
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .badge.published { background-color: var(--primary-brand); color: #111; }
+    .badge.draft { background-color: #f3f4f6; color: var(--text-muted); border: 1px solid var(--border-color); }
+
+    /* Actions */
+    .action-icons { display: flex; gap: 16px; }
+    .icon-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; text-decoration: none; color: var(--text-muted); }
+    .icon-btn.edit:hover { color: #2563eb; transform: scale(1.1); }
+    .icon-btn.delete:hover { color: var(--danger-red); transform: scale(1.1); }
+  </style>
+</head>
+<body>
+  <AdminSidebar />
+  <div class="main-wrapper">
+    <AdminTopbar />
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Manage Blogs</h1>
+          <p>Create, edit, and manage your blog posts</p>
+        </div>
+        <a href="/admin/create-post" class="btn-primary">
+          <i class="ph ph-plus"></i> Create New Blog
+        </a>
+      </div>
+
+      <div class="table-container">
+        <div class="table-toolbar">
+          <div class="search-box">
+            <i class="ph ph-magnifying-glass"></i>
+            <input type="text" id="search" placeholder="Search blogs...">
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 60px;">#</th>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Category</th>
+              <th>Author</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {blogs && blogs.map((blog, index) => (
+              <tr class="data-row blog-row" data-search={`${blog.title || ''} ${blog.status || ''} ${blog.author || ''} ${blog.category || ''}`.toLowerCase()}>
+                <td style="color: var(--text-muted); font-weight: 500;">{index + 1}</td>
+                <td style="font-weight: 600;">{blog.title}</td>
+                <td>
+                  <span class={`badge ${blog.status === 'Draft' ? 'draft' : 'published'}`}>
+                    {blog.status || 'Published'}
+                  </span>
+                </td>
+                <td style="color: var(--text-muted);">{blog.category || 'Uncategorized'}</td>
+                <td style="color: var(--text-muted);">{blog.author || 'Admin'}</td>
+                <td style="color: var(--text-muted);">{formatDate(blog)}</td>
+                <td>
+                  <div class="action-icons">
+                    <a href={`/admin/edit-post?id=${blog.id}`} class="icon-btn edit" title="Edit">
+                      <i class="ph ph-pencil-simple"></i>
+                    </a>
+                    <button class="icon-btn delete delete-btn" data-id={blog.id} title="Delete">
+                      <i class="ph ph-trash" style="pointer-events: none;"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+            
+            {(!blogs || blogs.length === 0) && (
+              <tr>
+                <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">
+                  No blogs yet. Click “Create New Blog” to add one.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script>
+  import { supabase } from '../../lib/supabase.js';
+
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) window.location.href = '/admin/login';
+
+  const searchInput = document.getElementById('search') as HTMLInputElement;
+  const rows = document.querySelectorAll<HTMLElement>('.blog-row');
+
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.trim().toLowerCase();
+    rows.forEach((row) => {
+      const match = !q || (row.dataset.search || '').includes(q);
+      row.style.display = match ? '' : 'none';
+    });
+  });
+
+  document.querySelectorAll('.delete-btn').forEach((button) => {
+    button.addEventListener('click', async (e) => {
+      const targetBtn = (e.target as HTMLElement).closest('.delete-btn');
+      const id = targetBtn?.getAttribute('data-id');
+
+      if (id && confirm('Are you sure you want to delete this post?')) {
+        const { error } = await supabase.from('Blogs').delete().eq('id', id);
+        if (error) {
+          alert('Could not delete: ' + error.message);
+          return;
+        }
+        window.location.reload();
+      }
+    });
+  });
+  </script>
+</body>
+</html>
