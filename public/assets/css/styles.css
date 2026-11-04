@@ -169,7 +169,7 @@ a:hover {
   }
 }
 /*  - theme color*/
-/* #CAF301 - uncore digital*/
+/* #caf301 - uncore digital*/
 /* #c9f31d - theme color */
 .tz-bg-primary {
   background-color: #caf301;
@@ -244,7 +244,7 @@ a:hover {
 }
 
 .tz-border-primary {
-  border-color: #caf301;
+  border-color: caf301;
 }
 
 .tz-border-secondary {
@@ -3668,7 +3668,7 @@ h6 {
   transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
-  background-color: #caf301;
+  background-color: caf301;
   text-align: center;
   background-color: #caf301;
 }
@@ -8280,15 +8280,15 @@ footer a:not(.tz-button):not(.tz-button-circle):not(.tz-footer__credit-link):not
 
 footer a:not(.tz-button):not(.tz-button-circle):not(.tz-footer__credit-link):not(:has(i)):hover,
 footer a:not(.tz-button):not(.tz-button-circle):not(.tz-footer__credit-link):not(:has(i)):focus {
-  color: #caf310 !important;
+  color: #caf301 !important;
 }
 
-/* "Powered by Uncore Digital" link: always #CAF310 */
+/* "Powered by Uncore Digital" link: always #caf301 */
 footer a.tz-footer__credit-link,
 footer a.tz-footer__credit-link:visited,
 footer a.tz-footer__credit-link:hover,
 footer a.tz-footer__credit-link:focus {
-  color: #caf310 !important;
+  color: #caf301 !important;
 }
 
 
