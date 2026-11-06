@@ -32,14 +32,24 @@ const { data: blogs } = await supabase
                   </h2>
                   <p class="blog-card__excerpt">{blog.excerpt}</p>
 
-                  <div class="tz-buttons blog-card__cta">
-                    <a class="tz-button text-uppercase fw-medium tz-text-m montserrat-regular" href={`/blog/${blog.slug}`}>
-                      Read More
-                    </a>
-                    <a class="tz-button-circle" href={`/blog/${blog.slug}`} aria-label={`Read ${blog.title}`}>
-                      <i class="ph ph-arrow-up-right"></i>
-                    </a>
-                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-4">
+  
+  <!-- Read More Button (Stays on the left) -->
+  <a href={`/blog/${blog.slug}`} class="your-read-more-class">
+    READ MORE <i class="ph ph-arrow-up-right"></i>
+  </a>
+  
+  <!-- LinkedIn Share Button (Pushed completely to the right) -->
+  <a 
+    href={`https://www.linkedin.com/sharing/share-offsite/?url=https://www.uncoredigital.com/blog/${blog.slug}`} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    class="share-btn-small"
+  >
+    <i class="ph ph-linkedin-logo"></i> Share
+  </a>
+  
+</div>
                 </div>
               </article>
             </div>
@@ -169,5 +179,31 @@ const { data: blogs } = await supabase
     font-family: "Outfit", sans-serif;
     color: #aaa;
     font-size: 18px;
+  }
+  /* Share Button Styles for Blog Cards */
+  .share-btn-small {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    color: #666 !important; /* Neutral gray to replace the default blue */
+    font-family: "Outfit", sans-serif;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    padding: 8px 14px !important;
+    border-radius: 999px !important;
+    background-color: transparent !important;
+    border: 1px solid #ddd !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .share-btn-small i {
+    font-size: 16px !important;
+  }
+
+  .share-btn-small:hover {
+    color: #fff !important;
+    background-color: #0077b5 !important; /* LinkedIn Blue on hover */
+    border-color: #0077b5 !important;
   }
 </style>

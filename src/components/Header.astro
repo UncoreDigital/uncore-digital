@@ -4,20 +4,19 @@
       <div class="row">
         <div class="col-4 col-lg-2 d-flex align-items-center">
           <a class="tz-header1__logo" href="/">
-            <a class="tz-header1__logo" href="/">
-              <img
-                class="logo-light"
-                src="/assets/images/logo/logo.png"
-                alt="Logo Light"
-              />
-              <img
-                class="logo-dark"
-                src="/assets/images/logo/logo-dark.png"
-                alt="Logo Dark"
-              />
-            </a>
+            <img
+              class="logo-light"
+              src="/assets/images/logo/logo.png"
+              alt="Uncore Digital"
+            />
+            <img
+              class="logo-dark"
+              src="/assets/images/logo/logo-dark.png"
+              alt="Uncore Digital"
+            />
           </a>
         </div>
+
         <div
           class="col-8 col-lg-10 text-end d-flex align-items-center justify-content-end justify-content-xl-center"
         >
@@ -33,51 +32,35 @@
                 <li class="has-dropdown">
                   <a href="/" class="montserrat-regular"> Services </a>
                   <ul class="tz-submenu submenu">
-                    <li>
-                      <a href="/digital-and-brand-marketing" class="text-nowrap"
-                        >Digital & Brand Marketing</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="/product-design-and-development"
-                        class="text-nowrap">Product Design & Development</a
-                      >
-                    </li>
-
-                    <li>
-                      <a href="/website-and-app-development" class="text-nowrap"
-                        >Website & App Development</a
-                      >
-                    </li>
-                    <li>
-                      <a href="/digital-transformation" class="text-nowrap"
-                        >Digital Transformation</a
-                      >
-                    </li>
+                    <li><a href="/digital-and-brand-marketing" class="text-nowrap">Digital & Brand Marketing</a></li>
+                    <li><a href="/product-design-and-development" class="text-nowrap">Product Design & Development</a></li>
+                    <li><a href="/website-and-app-development" class="text-nowrap">Website & App Development</a></li>
+                    <li><a href="/digital-transformation" class="text-nowrap">Digital Transformation</a></li>
                   </ul>
                 </li>
 
                 <li class="has-dropdown">
-                  <a href="" class="montserrat-regular"> Industries </a>
+                  <a href="#" class="montserrat-regular"> Industries </a>
                   <ul class="tz-submenu submenu">
-                    <li>
-                      <a href="/cpa-ea" class="montserrat-regular">CPA & EA</a>
-                    </li>
-                    <li>
-                      <a href="/hme-dme" class="montserrat-regular">HME/DME</a>
-                    </li>
+                    <li><a href="/cpa-ea" class="montserrat-regular text-nowrap">CPA & EA</a></li>
+                    <li><a href="/hme-dme" class="montserrat-regular text-nowrap">HME/DME</a></li>
+                    <li><a href="/automobile" class="montserrat-regular text-nowrap">Automobile</a></li>
+                    <li><a href="/saas" class="montserrat-regular text-nowrap">SAAS & Tech Startups</a></li>
+                    <li><a href="/event-management" class="montserrat-regular text-nowrap">Event Management</a></li>
+                    <li><a href="/e-commerce" class="montserrat-regular text-nowrap">E-Commerce</a></li>
+                    <li><a href="/manufacturing" class="montserrat-regular text-nowrap">Manufacturing</a></li>
                   </ul>
                 </li>
                 <li>
-                  <a href="/about-us" class="montserrat-regular">About</a>
+                  <a href="/blogs" class="montserrat-regular text-nowrap">Blogs</a>
                 </li>
                 <li>
-                  <a href="/blogs" class="montserrat-regular">Blogs</a>
+                  <a href="/about-us" class="montserrat-regular text-nowrap">About</a>
                 </li>
               </ul>
             </nav>
           </div>
+
           <div
             class="d-none d-md-flex align-items-center justify-content-end gap-2"
           >
@@ -93,6 +76,7 @@
               >
             </div>
           </div>
+
           <button
             class="tz-button d-inline-flex d-xl-none tz-offcanvas-btn tz-offcanvas-open-btn ms-4"
           >
@@ -103,3 +87,82 @@
     </div>
   </div>
 </div>
+
+<script>
+  // Adds "header-scrolled" after scrolling down and removes it near the top.
+  // Two thresholds (60 and 20) stop the header flickering as it resizes.
+  const header = document.querySelector<HTMLElement>(".tz-header1");
+
+  if (header) {
+    let ticking = false;
+
+    const update = () => {
+      const y = window.scrollY;
+      const isScrolled = header.classList.contains("header-scrolled");
+
+      if (!isScrolled && y > 60) header.classList.add("header-scrolled");
+      else if (isScrolled && y < 20) header.classList.remove("header-scrolled");
+
+      ticking = false;
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      },
+      { passive: true }
+    );
+
+    update(); // handles a reload that happens partway down the page
+  }
+</script>
+
+<style>
+  /* ---------- Top of the page: normal theme size ---------- */
+  .tz-header1 {
+    transition: padding 0.3s ease;
+  }
+
+  .tz-header1__logo img {
+    width: 173px;
+    max-width: 100%;
+    height: auto;
+    transition: width 0.3s ease;
+  }
+
+  /* ---------- After scrolling: compact bar, like your screenshot ---------- */
+  .tz-header1.header-scrolled {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+
+  .tz-header1.header-scrolled .tz-header1__wrapper {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Logo: 173px -> 155px */
+  .tz-header1.header-scrolled .tz-header1__logo img {
+    width: 155px !important;
+  }
+
+  @media (max-width: 767px) {
+    .tz-header1__logo img {
+      width: 140px;
+    }
+    .tz-header1.header-scrolled .tz-header1__logo img {
+      width: 120px !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tz-header1,
+    .tz-header1__logo img {
+      transition: none;
+    }
+  }
+</style>

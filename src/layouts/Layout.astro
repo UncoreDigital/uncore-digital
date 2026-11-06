@@ -1,15 +1,15 @@
 ---
 import Analytics from "@vercel/analytics/astro";
 import OffCanvas from "../components/OffCanvas.astro";
-// use for Home page only
-import Header from "../components/Header.astro";
-//use for pages other than Home page
+// use for pages other than Home page
 import Header2 from "../components/Header2.astro";
 import Footer from "../components/Footer.astro";
 import Chatbot from "../components/Chatbot.astro";
 
-// Get the current path
-// const isHomePage = Astro.url.pathname === "/";
+const {
+  title = "Uncore Digital",
+  description = "Uncore Digital is a digital agency offering digital marketing, product development, digital transformation, and web and app development.",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -22,7 +22,8 @@ import Chatbot from "../components/Chatbot.astro";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="generator" content={Astro.generator} />
-    <title>Uncore Digital</title>
+    <title>{title}</title>
+    <meta name="description" content={description} />
 
     <!-- Phosphor Icon css -->
     <link rel="stylesheet" href="/assets/css/phosphoricons.css" />
@@ -34,8 +35,6 @@ import Chatbot from "../components/Chatbot.astro";
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
     <!-- Swiper css -->
     <link rel="stylesheet" href="/assets/css/swiper-bundle.min.css" />
-    <!-- Animate css -->
-    <link rel="stylesheet" href="/assets/css/animate.css" />
     <!-- style css -->
     <link rel="stylesheet" href="/assets/css/styles.css" />
 
@@ -45,8 +44,8 @@ import Chatbot from "../components/Chatbot.astro";
   </head>
   <body class="tz-bg-neutral3">
     <div class="tz-body-overlay"></div>
-    <!-- Preloader -->
 
+    <!-- Preloader -->
     <div class="preloader">
       <div class="spinner-wrap">
         <div class="preloader-logo">
@@ -56,29 +55,22 @@ import Chatbot from "../components/Chatbot.astro";
             class="img-fluid"
           />
         </div>
-        <!-- <div class="spinner"></div> -->
       </div>
     </div>
-
     <!-- Preloader End -->
 
-    <!-- back to to button start-->
+    <!-- back to top button -->
     <a href="#" id="scroll-top" class="back-to-top-btn"
       ><i class="ph ph-arrow-up"></i></a
     >
-    <!-- back to to button end-->
 
     <OffCanvas />
     <Header2 />
     <slot />
     <Chatbot />
     <Footer />
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"></script>
-    <!-- JQuery  -->
+
+    <!-- jQuery (loaded once) -->
     <script is:inline src="/assets/js/jquery-3.7.1.min.js"></script>
     <!-- bootstrap -->
     <script is:inline src="/assets/js/bootstrap.bundle.min.js"></script>
@@ -92,48 +84,42 @@ import Chatbot from "../components/Chatbot.astro";
     <script is:inline src="/assets/js/counterup.min.js"></script>
     <!-- Wow -->
     <script is:inline src="/assets/js/wow.min.js"></script>
-    <!-- main js -->
+    <!-- main js (loaded once) -->
     <script is:inline src="/assets/js/main.js"></script>
+
     <Analytics />
   </body>
 </html>
 
-<style>
+<style is:global>
   @font-face {
-    font-family: "Outfit"; /* Choose a unique and descriptive name for your font */
-    src: url("/assets/fonts/outfit/OutfitRegular.ttf") format("truetype"); /* Adjust the path as needed */
-    font-weight: normal; /* Or specify a different weight if your font has it (e.g., 400, 700) */
-    font-style: normal; /* Or 'italic' if your font is italic */
-    /* You can add more descriptors here if needed, like font-display */
+    font-family: "Outfit";
+    src: url("/assets/fonts/outfit/OutfitRegular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
   }
 
   @font-face {
-    font-family: "Teko"; /* Choose a unique and descriptive name for your font */
-    src: url("/assets/fonts/teko/Teko-Bold.ttf") format("truetype"); /* Adjust the path as needed */
-    font-weight: normal; /* Or specify a different weight if your font has it (e.g., 400, 700) */
-    font-style: normal; /* Or 'italic' if your font is italic */
-    /* You can add more descriptors here if needed, like font-display */
+    font-family: "Teko";
+    src: url("/assets/fonts/teko/Teko-Bold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
   }
 
   @font-face {
-    font-family: "Teko Regular"; /* Choose a unique and descriptive name for your font */
-    src: url("/assets/fonts/teko/Teko-Regular.ttf") format("truetype"); /* Adjust the path as needed */
-    font-weight: normal; /* Or specify a different weight if your font has it (e.g., 400, 700) */
-    font-style: normal; /* Or 'italic' if your font is italic */
-    /* You can add more descriptors here if needed, like font-display */
+    font-family: "Teko Regular";
+    src: url("/assets/fonts/teko/Teko-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
   }
+
   html,
   body {
     margin: 0;
     width: 100%;
     height: 100%;
-    /* font-family: "Outfit", serif; */
-  }
-  /* h5 {
-    font-family: "Teko", serif;
-  } */
-
-  .tz-wwa1-card h5 {
-    /* font-family: "Outfit", serif; */
   }
 </style>
